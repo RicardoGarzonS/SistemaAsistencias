@@ -1,7 +1,6 @@
 package BusinessLogic;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import DataAccess.DTO.UsuarioDTO;
 import DataAccess.DAO.UsuarioDAO;
@@ -28,8 +27,8 @@ public class UsuarioBL {
             throw new Exception("¡El objeto UsuarioDTO no puede ser nulo!");
         }
         
-        String usuario = usuarioDTO.getUsuario();
-        String contraseña = usuarioDTO.getContraseña();
+        String usuario = usuarioDTO.getIdUsuario();
+        String contraseña = usuarioDTO.getClave();
         
         if (usuario == null || usuario.trim().isEmpty()) {
             throw new Exception("¡El nombre de usuario no puede estar vacío!");
@@ -47,8 +46,8 @@ public class UsuarioBL {
                 throw new Exception("¡El objeto UsuarioDTO no puede ser nulo!");
             }
             
-            String usuario = usuarioDTO.getUsuario();
-            String contraseña = usuarioDTO.getContraseña();
+            String usuario = usuarioDTO.getIdUsuario();
+            String contraseña = usuarioDTO.getClave();
             
             if (usuario == null || usuario.trim().isEmpty()) {
                 throw new Exception("¡El nombre de usuario no puede estar vacío!");

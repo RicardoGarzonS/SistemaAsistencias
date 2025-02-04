@@ -1,7 +1,6 @@
 package BusinessLogic;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import DataAccess.DAO.InscripcionDAO;
 import DataAccess.DTO.InscripcionDTO;
@@ -15,7 +14,7 @@ public class InscripcionBL {
     }
 
     public boolean registrarInscripcion(InscripcionDTO inscripcion) throws Exception {
-        if (inscripcion.getIdUsuario() <= 0 || inscripcion.getIdClase() <= 0|| inscripcion.getIdLector() <= 0) 
+        if (Integer.parseInt(inscripcion.getIdUsuario()) <= 0 || Integer.parseInt(inscripcion.getIdClase()) <= 0 || Integer.parseInt(inscripcion.getIdLector()) <= 0) 
         {
             throw new IllegalArgumentException("IDs de usuario, clase o lector inválidos");
         }
