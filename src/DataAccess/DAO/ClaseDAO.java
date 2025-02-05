@@ -165,4 +165,18 @@ public class ClaseDAO extends SQLiteDataHelper implements IDAO<ClaseDTO>{
         return 0;
     }
 
+    public int obtenerIdDiaPorIdClase(int idClase, Connection conn) throws SQLException {
+        String query = "SELECT idDia FROM Clase WHERE idClase = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, idClase);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("idDia");
+            } else {
+                throw new SQLException("Clase no encontrada");
+            }
+        }
+    }
+    
+
 }
