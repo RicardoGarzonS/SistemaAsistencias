@@ -4,11 +4,9 @@ import UserInterface.CustomerControl.*;
 import UserInterface.Style;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,12 +25,12 @@ public class LogInForm extends JFrame{
     private G3Panel     loginTtlPanel;
     final   G3Label     loginTtlLabel   = new G3Label("Inicio de sesion");
 
-    private G3Panel     rolPanel;
-    final   G3Label     rolLabel        = new G3Label("ROL");
-    private JComboBox   rolSelect;
+    // private G3Panel     rolPanel;
+    // final   G3Label     rolLabel        = new G3Label("ROL");
+    // private JComboBox   rolSelect;
 
     private G3Panel     usuarioPanel;
-    final   G3Label     usuarioLabel    = new G3Label("USUARIO");
+    final   G3Label     usuarioLabel    = new G3Label("CORREO");
     private G3TextBox   usuarioTxt;
 
     private G3Panel     clavePanel;
@@ -94,17 +92,17 @@ public class LogInForm extends JFrame{
         loginTtlPanel.agregarTexto(loginTtlLabel);
         loginPanel.add(loginTtlPanel);
 
-        rolPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
-        rolPanel.agregarTexto(rolLabel);
-        loginPanel.add(rolPanel);
+        // rolPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
+        // rolPanel.agregarTexto(rolLabel);
+        // loginPanel.add(rolPanel);
 
-        String[] opciones = {"Administrador", "Profesor", "Estudiante"};
-        rolSelect = new JComboBox(opciones);
-        rolSelect.setFont(new Font("Century Gothic", Font.PLAIN, (altoLbl / 7) * 4));
-        rolSelect.setBounds(new Rectangle(rolPanel.getX() + anchoLbl, rolPanel.getY(), anchoTxt, altoLbl));
-        loginPanel.add(rolSelect);
+        // String[] opciones = {"Administrador", "Profesor", "Estudiante"};
+        // rolSelect = new JComboBox(opciones);
+        // rolSelect.setFont(new Font("Century Gothic", Font.PLAIN, (altoLbl / 7) * 4));
+        // rolSelect.setBounds(new Rectangle(rolPanel.getX() + anchoLbl, rolPanel.getY(), anchoTxt, altoLbl));
+        // loginPanel.add(rolSelect);
 
-        usuarioPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, rolPanel.getY() + altoLbl + separacion, anchoLbl, altoLbl));
+        usuarioPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
         usuarioPanel.agregarTexto(usuarioLabel);
         loginPanel.add(usuarioPanel);
 
