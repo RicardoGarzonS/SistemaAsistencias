@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import BusinessLogic.InscripcionBL;
 import DataAccess.IDAO;
 import DataAccess.SQLiteDataHelper;
 import DataAccess.DTO.AsistenciaDTO;
@@ -146,4 +147,27 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         }
     }
     
+    public Integer contarAsistenciasEspecifico (Integer idUsuario ,String fechaActual,Integer idMateria) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+        String fechaInscripcion = iBL.getFechaInscripcion(idUsuario , idMateria);
+        int totalRegistros = 0;
+        String query =  " SELECT COUNT(*) AS TotalReg " +
+                        " FROM Asistencia a " +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                        " JOIN Clase c ON i.IdClase = c.IdClase " +
+                        " WHERE i.IdUsuario = " + idUsuario.toString() +
+                        " AND c.IdMateria = " + idMateria.toString() +
+                        " AND DATE('" + fechaActual + "') >= DATE('" + fechaInscripcion + "')";
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                totalRegistros = rs.getInt("TotalReg");
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return totalRegistros;
+    }
 }

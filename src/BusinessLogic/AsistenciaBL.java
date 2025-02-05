@@ -33,6 +33,12 @@ public class AsistenciaBL {
     public boolean delete(int idAsistencia) throws Exception {
         return aDAO.delete(idAsistencia);
     }
+
+    public Integer contarAsistenciasEspecifico (int idUsuario, String fechaActual,int idMaterial) throws Exception {
+        return aDAO.contarAsistenciasEspecifico(idUsuario, fechaActual ,idMaterial);
+    }
+
+
     
 }
     

@@ -183,4 +183,20 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
         return claveUsuario;
     }
 
+    public int getRolUsuario (String correo) throws Exception {
+        Integer rolUsuario = null;
+        String query = "SELECT IdRol " + "FROM Usuario WHERE Estado = 'A' AND CorreoInstitucional = " + "'" + correo + "'";
+        try {
+            Connection conn = openConnection();
+            Statement  stmt = conn.createStatement();
+            ResultSet  rs   = stmt.executeQuery(query);
+            if (rs.next()) {
+                rolUsuario = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return rolUsuario;
+    }
+
 }

@@ -144,4 +144,23 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
         }
     }
 
+    public String getFechaInscripcion (Integer idUsuario, Integer idMateria) throws Exception {
+        String fecha = null;
+        String query =  "SELECT i.FechaCreacion FROM Inscripcion i " + 
+                        "JOIN Clase c on i.IDClase = c.IDClase " + 
+                        "WHERE i.IdUsuario = ? AND c.IDMateria = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
+            pstmt.setInt(2, idMateria);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                fecha = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return fecha;
+    }
 }
