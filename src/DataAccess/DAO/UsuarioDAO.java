@@ -20,7 +20,6 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
      UsuarioDTO usuario = new UsuarioDTO();
      String query = "SELECT IdUsuario"
                     + ", IdRol"
-                    + ", IdTarjeta"
                     + ", NombreUsuario"
                     + ", Clave"
                     + ", Cedula"     
@@ -36,15 +35,14 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
                     while (rs.next()) {
                         usuario = new UsuarioDTO( 
                           rs.getString(1)
-                        , rs.getString(2)
+                        , rs.getString(2)    
                         , rs.getString(3)
                         , rs.getString(4)
                         , rs.getString(5)
                         , rs.getString(6)
                         , rs.getString(7)
                         , rs.getString(8)
-                        , rs.getString(9)
-                        , rs.getString(10));
+                        , rs.getString(9));
                     }
                 } catch (SQLException e) {
                     throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
@@ -57,7 +55,6 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
         List<UsuarioDTO> usuarios = new ArrayList<>();
         String query = "SELECT IDUsuario"
                     + ", IdRol"
-                    + ", IdTarjeta"
                     + ", NombreUsuario"
                     + ", Clave"
                     + ", Cedula"     
@@ -81,8 +78,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
                 , rs.getString(6)
                 , rs.getString(7)
                 , rs.getString(8)
-                , rs.getString(9)
-                , rs.getString(10));
+                , rs.getString(9));
                 usuarios.add(u);
             }
         } catch (SQLException e) {
