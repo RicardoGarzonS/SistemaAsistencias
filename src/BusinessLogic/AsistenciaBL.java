@@ -1,7 +1,6 @@
 package BusinessLogic;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import DataAccess.DAO.AsistenciaDAO;
 import DataAccess.DTO.AsistenciaDTO; 
@@ -15,7 +14,7 @@ public class AsistenciaBL {
         if (asistencia.getFecha() == null) {
             throw new IllegalArgumentException("La fecha de asistencia no puede ser nula.");
         }
-        return aDAO.insert(asistencia); 
+        return aDAO.create(asistencia); 
     }
     
         public List<AsistenciaDTO> getAll() throws Exception {
