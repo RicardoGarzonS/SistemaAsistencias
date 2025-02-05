@@ -3,15 +3,23 @@ package UserInterface.CustomerControl;
 import UserInterface.Style;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class G3Button  extends JButton implements MouseListener {
+
     public G3Button(String text){
         customizeComponent(text);
     }
+
+    public G3Button(String text, Rectangle area){
+        customizeComponent(text, area);
+    }
+
     public G3Button(String text, String iconPath){
         customizeComponent(text, iconPath);
     }
@@ -28,13 +36,24 @@ public class G3Button  extends JButton implements MouseListener {
     }
     public void customizeComponent(String text) {
         setText(text);
-        setOpaque(false);
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
         setForeground(Style.COLOR_FONT);
         setHorizontalAlignment(Style.ALIGNMENT_LEFT);
-        setFont(Style.FONT);
+        setFont(new Font("Century Gothic", Font.PLAIN, (getHeight() / 7) * 4));
+        
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+    public void customizeComponent(String text, Rectangle area) {
+        setBounds(area);
+        setText(text);
+        // setFocusPainted(false);
+        // setBorderPainted(false);
+        // setContentAreaFilled(false);
+        setForeground(Style.COLOR_FONT);
+        setHorizontalAlignment(Style.ALIGNMENT_LEFT);
+        setFont(new Font("Century Gothic", Font.PLAIN, (getHeight() / 7) * 4));
         
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
