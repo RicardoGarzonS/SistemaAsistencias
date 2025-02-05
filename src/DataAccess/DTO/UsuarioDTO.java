@@ -4,7 +4,6 @@ public class UsuarioDTO {
 
     private String IdUsuario          ;
     private String IdRol              ;
-    private String IdTarjeta          ;
     private String NombreUsuario      ;
     private String Clave              ;
     private String Cedula             ;
@@ -24,11 +23,10 @@ public class UsuarioDTO {
         this.Cedula = cedula;
     }
 
-    public UsuarioDTO(String idUsuario, String idRol, String idTarjeta, String nombreUsuario, String clave,
+    public UsuarioDTO(String idUsuario, String idRol, String nombreUsuario, String clave,
             String cedula, String correoInstitucional, String estado, String fechaCreacion, String fechaModificacion) {
         this.IdUsuario = idUsuario;
         this.IdRol = idRol;
-        this.IdTarjeta = idTarjeta;
         this.NombreUsuario = nombreUsuario;
         this.Clave = clave;
         this.Cedula = cedula;
@@ -55,13 +53,7 @@ public class UsuarioDTO {
         IdRol = idRol;
     }
 
-    public String getIdTarjeta() {
-        return IdTarjeta;
-    }
 
-    public void setIdTarjeta(String idTarjeta) {
-        IdTarjeta = idTarjeta;
-    }
 
     public String getNombreUsuario() {
         return NombreUsuario;
@@ -125,7 +117,6 @@ public class UsuarioDTO {
         return getClass().getName()
         + "\n IdUsuario          : " + getIdUsuario          ()
         + "\n IdRol              : " + getIdRol              ()
-        + "\n IdTarjeta          : " + getIdTarjeta          ()
         + "\n NombreUsuario      : " + getNombreUsuario      ()
         + "\n Clave              : " + getClave              ()
         + "\n Cedula             : " + getCedula             ()

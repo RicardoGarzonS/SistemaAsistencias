@@ -91,15 +91,12 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
 
     @Override
     public boolean create(AsistenciaDTO entity) throws Exception {
-         String query = "INSERT INTO Asistencia (IdAsistencia, IdInscripcion, Fecha, HoraEntrada, HoraSalida ) VALUES (?,?,?,?,?)";
+         String query = "INSERT INTO Asistencia (IdInscripcion, Fecha ) VALUES (?,?,?)";
         try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, entity.getIdAsistencia());
             pstmt.setString(2, entity.getIdInscripcion());
             pstmt.setString(3, entity.getFecha());
-            pstmt.setString(4, entity.getHoraEntrada());
-            pstmt.setString(5, entity.getHoraSalida());
             pstmt.executeUpdate();
             return true;
         } 
@@ -112,15 +109,13 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
     public boolean update(AsistenciaDTO entity) throws Exception {
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
        LocalDateTime now = LocalDateTime.now();
-       String query = "UPDATE Asistencia SET fecha = ?, HoraEntrada = ?, HoraSalida = ?, Justificacion = ?, FechaModifica = ? WHERE IdAsistencia = ?";
+       String query = "UPDATE Asistencia SET HoraEntrada = ?, HoraSalida = ?, FechaModifica = ? WHERE IdAsistencia = ?";
        try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
 
-            pstmt.setString(1, entity.getFecha());
             pstmt.setString(2, entity.getHoraEntrada());
             pstmt.setString(3, entity.getHoraSalida());
-            pstmt.setString(4, entity.getJustificacion());
             pstmt.setString(5, formatter.format(now).toString());
             pstmt.setString(6, entity.getIdAsistencia());
             pstmt.executeUpdate();
@@ -170,4 +165,52 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         }
         return totalRegistros;
     }
+
+    public List<AsistenciaDTO> buscarAsistenciaPorUsuarioFechaLector(Integer idUsuario, String fecha, Integer idLector) throws Exception {
+        List<AsistenciaDTO> asistencias = new ArrayList<>();
+        String query = "SELECT a.IdAsistencia, a.IdInscripcion, a.Fecha, a.HoraEntrada, a.HoraSalida, a.Justificacion, a.Estado, a.FechaCreacion, a.FechaModificacion " 
+                       + "FROM Asistencia a " 
+                       + "JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " 
+                       + "WHERE i.IdUsuario = ? AND a.Fecha = ? AND i.IdLector = ? AND a.Estado = 'A'";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
+            pstmt.setString(2, fecha);
+            pstmt.setInt(3, idLector);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                AsistenciaDTO asistencia = new AsistenciaDTO(
+                    rs.getString("IdAsistencia"),
+                    rs.getString("IdInscripcion"),
+                    rs.getString("Fecha"),
+                    rs.getString("HoraEntrada"),
+                    rs.getString("HoraSalida"),
+                    rs.getString("Justificacion"),
+                    rs.getString("Estado"),
+                    rs.getString("FechaCreacion"),
+                    rs.getString("FechaModificacion")
+                );
+                asistencias.add(asistencia);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return asistencias;
+    }
+    public boolean updateJustificacion(Integer idAsistencia, String justificacion) throws Exception {
+        String query = "UPDATE Asistencia SET Justificacion = ? WHERE IdAsistencia = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, justificacion);
+            pstmt.setInt(2, idAsistencia);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    
 }
