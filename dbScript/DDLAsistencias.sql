@@ -107,3 +107,7 @@ CREATE TABLE Asistencia (
     ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
+SELECT COUNT(*) AS TotalReg FROM Materia m
+JOIN Clase c ON m.IdMateria = c.IdMateria
+JOIN Inscripcion i ON c.IdClase = i.IdClase
+WHERE i.IdUsuario = 1 AND i.Estado = 'A';
