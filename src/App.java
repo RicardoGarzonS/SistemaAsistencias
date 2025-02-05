@@ -10,7 +10,7 @@ public class App {
         // lg.loginCuenta("juan@epn.edu.ec", "1234");
 
         Estudiante estudiante = new Estudiante();
-        estudiante.asistenciasRegistradasEspecifico(1, 1);
+        estudiante.asistenciasTotalMaterias(1);
 
 
     }

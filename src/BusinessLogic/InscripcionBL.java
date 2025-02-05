@@ -6,11 +6,12 @@ import DataAccess.DAO.InscripcionDAO;
 import DataAccess.DTO.InscripcionDTO;
 
 public class InscripcionBL {
-    private InscripcionDAO iDao;
+    private InscripcionDTO iDTO; //cache
+    private InscripcionDAO iDAO = new InscripcionDAO();
 
 
     public InscripcionBL() {
-        iDao = new InscripcionDAO();
+        iDAO = new InscripcionDAO();
     }
 
     public boolean registrarInscripcion(InscripcionDTO inscripcion) throws Exception {
@@ -18,27 +19,32 @@ public class InscripcionBL {
         {
             throw new IllegalArgumentException("IDs de usuario, clase o lector inválidos");
         }
-        return iDao.create(inscripcion);
+        return iDAO.create(inscripcion);
     }
 
     public List<InscripcionDTO> getAll() throws Exception {
-        return iDao.readAll();
+        return iDAO.readAll();
     }
 
     public InscripcionDTO getById(int idInscripcion) throws Exception {
-        return iDao.readBy(idInscripcion);
+        iDTO = iDAO.readBy(idInscripcion);
+        return iDTO;
     }
 
     public boolean update(InscripcionDTO idInscripcion) throws Exception {
-        return iDao.update(idInscripcion);
+        return iDAO.update(idInscripcion);
     }
 
     public boolean delete(int idInscripcion) throws Exception {
-        return iDao.delete(idInscripcion);
+        return iDAO.delete(idInscripcion);
     }
 
     public String getFechaInscripcion (Integer idUsuario, Integer idMaterial) throws Exception {
-        return iDao.getFechaInscripcion(idUsuario, idMaterial);
+        return iDAO.getFechaInscripcion(idUsuario, idMaterial);
+    }
+
+    public String[] getMateriaInscritas (Integer idUsuario) throws Exception {
+        return iDAO.getMateriasInscritas(idUsuario);
     }
 }
 

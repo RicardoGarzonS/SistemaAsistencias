@@ -34,8 +34,12 @@ public class AsistenciaBL {
         return aDAO.delete(idAsistencia);
     }
 
-    public Integer contarAsistenciasEspecifico (int idUsuario, String fechaActual,int idMaterial) throws Exception {
-        return aDAO.contarAsistenciasEspecifico(idUsuario, fechaActual ,idMaterial);
+    public Integer contarAsistenciasMateriaEspecifica (int idUsuario, String fechaActual,int idMaterial) throws Exception {
+        return aDAO.contarAsistenciasMateriaEspecifica(idUsuario, fechaActual ,idMaterial);
+    }
+
+    public String [] contarAsistenciasTotalMaterias (Integer idUsuario, String fechaActual) throws Exception {
+        return aDAO.contarAsistenciasTotalMaterias(idUsuario, fechaActual);
     }
 
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import BusinessLogic.InscripcionBL;
+import BusinessLogic.MateriaBl;
 import DataAccess.IDAO;
 import DataAccess.SQLiteDataHelper;
 import DataAccess.DTO.AsistenciaDTO;
@@ -147,7 +148,7 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         }
     }
     
-    public Integer contarAsistenciasEspecifico (Integer idUsuario ,String fechaActual,Integer idMateria) throws Exception {
+    public Integer contarAsistenciasMateriaEspecifica (Integer idUsuario ,String fechaActual,Integer idMateria) throws Exception {
         InscripcionBL iBL = new InscripcionBL();
         String fechaInscripcion = iBL.getFechaInscripcion(idUsuario , idMateria);
         int totalRegistros = 0;
@@ -169,5 +170,34 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
             throw e;
         }
         return totalRegistros;
+    }
+
+    public String [] contarAsistenciasTotalMaterias (Integer idUsuario, String fechaActual) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+        MateriaBl mBl = new MateriaBl();
+        String [] materias = iBL.getMateriaInscritas(idUsuario);
+        int idMateria = mBl.getIdMateria(materias[0]);
+        String fechaInscripcion = iBL.getFechaInscripcion(idUsuario , idMateria);
+        String [] asistencias = new String [materias.length];
+        String query =  " SELECT COUNT(*) AS TotalReg " +
+                        " FROM Asistencia a " +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                        " JOIN Clase c ON i.IdClase = c.IdClase " +
+                        " WHERE i.IdUsuario = " + idUsuario.toString() +
+                        " AND DATE('" + fechaActual + "') >= DATE('" + fechaInscripcion + "')" + 
+                        " AND c.IdMateria = ";
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            for (int i = 0; i < materias.length; i++) {
+                ResultSet rs = stmt.executeQuery(query + mBl.getIdMateria(materias[i]));
+                if (rs.next()) {
+                    asistencias[i] = rs.getString("TotalReg") + " - " + materias[i];
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return asistencias;
     }
 }
