@@ -12,8 +12,9 @@ public class Lector {
         int retorno = Integer.parseInt(stringTarjeta);
         sc.close();
         return retorno;
-
     }
+
+    
 
     
 }

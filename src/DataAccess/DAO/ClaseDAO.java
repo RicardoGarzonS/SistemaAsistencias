@@ -147,4 +147,22 @@ public class ClaseDAO extends SQLiteDataHelper implements IDAO<ClaseDTO>{
 
     }
 
+    // Cantidad de dias de clase, voy a asumir que son cuatro semestres de clase, entonces 16 semanas
+    public Integer countDias (Integer idMateria) throws Exception {
+        String query =" SELECT COUNT(*) TotalReg FROM Clase"
+                     +" WHERE IDMateria = " + idMateria.toString() + "AND Estado = 'A'";
+        try {
+            Connection conn = openConnection();         // conectar a DB     
+            Statement  stmt = conn.createStatement();   // CRUD : select * ...    
+            ResultSet rs   = stmt.executeQuery(query);  // ejecutar la
+            while (rs.next()) {
+                return rs.getInt(1);                    // TotalReg
+            }
+        } 
+        catch (SQLException e) {
+            throw e; //new PatException(e.getMessage(), getClass().getName(), "getMaxRow()");
+        }
+        return 0;
+    }
+
 }

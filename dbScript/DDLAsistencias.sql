@@ -101,8 +101,8 @@ CREATE TABLE Asistencia (
     ,IdInscripcion          INTEGER NOT NULL REFERENCES Inscripcion(IdInscripcion)
 
     ,Fecha                  DATE NOT NULL
-    ,HoraEntrada            INTEGER
-    ,HoraSalida             INTEGER
+    ,HoraEntrada            INTEGER /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
+    ,HoraSalida             INTEGER /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
     ,Justificacion          BOOLEAN
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT 'A'
