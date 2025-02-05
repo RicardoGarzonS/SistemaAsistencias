@@ -14,25 +14,22 @@ CREATE TABLE Rol (
 
     ,Nombre                 VARCHAR(10) NOT NULL UNIQUE
 
-    ,Estado                 VARCHAR(1) NOT NULL
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime')) 
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 CREATE TABLE Usuario (
-     IdUsuario              INTEGER PRIMARY KEY AUTOINCREMENT
-
+     IdUsuario              INTEGER PRIMARY KEY UNIQUE
     ,IdRol                  INTEGER NOT NULL REFERENCES Rol(IdRol)
-
-    ,IdTarjeta              INTEGER NOT NULL UNIQUE
-    ,NombreUsuario          VARCHAR(20) NOT NULL UNIQUE
+    ,NombreUsuario          VARCHAR(20) NOT NULL 
     ,Clave                  VARCHAR(20) NOT NULL
     ,Cedula                 VARCHAR(10) NOT NULL UNIQUE
     ,CorreoInstitucional    VARCHAR(40) NOT NULL UNIQUE
 
     ,Estado                 INTEGER NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 CREATE TABLE Materia (
@@ -41,8 +38,8 @@ CREATE TABLE Materia (
     ,Nombre                 VARCHAR(40) NOT NULL UNIQUE
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 CREATE TABLE Dia (
@@ -51,8 +48,8 @@ CREATE TABLE Dia (
     ,Nombre                 VARCHAR(10) NOT NULL UNIQUE
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 
@@ -62,12 +59,12 @@ CREATE TABLE Clase (
     ,IdMateria              INTEGER NOT NULL REFERENCES Materia(IdMateria)
     ,IdDia                  INTEGER NOT NULL REFERENCES Dia(IdDia)
 
-    ,HoraInicio             INTEGER NOT NULL
-    ,HoraFin                INTEGER NOT NULL
+    ,HoraInicio             TEXT NOT NULL
+    ,HoraFin                TEXT NOT NULL
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 CREATE TABLE Lector (
@@ -76,8 +73,8 @@ CREATE TABLE Lector (
     ,CodigoAula             VARCHAR(10) NOT NULL UNIQUE
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 CREATE TABLE Inscripcion (
@@ -90,8 +87,8 @@ CREATE TABLE Inscripcion (
     ,Año                    VARCHAR(4) NOT NULL
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT ('A')
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
 
@@ -101,11 +98,12 @@ CREATE TABLE Asistencia (
     ,IdInscripcion          INTEGER NOT NULL REFERENCES Inscripcion(IdInscripcion)
 
     ,Fecha                  DATE NOT NULL
-    ,HoraEntrada            INTEGER /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
-    ,HoraSalida             INTEGER /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
+    ,HoraEntrada            TEXT NOT NULL /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
+    ,HoraSalida             TEXT NOT NULL /* Se deberia cambiar al formato de hora para hacer un split y poder ver si la asistencia cuenta*/
     ,Justificacion          BOOLEAN
 
     ,Estado                 VARCHAR(1) NOT NULL DEFAULT 'A'
-    ,FechaCreacion          DATETIME NOT NULL
-    ,FechaModificacion      DATETIME
+    ,FechaCreacion          DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
+    ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
+

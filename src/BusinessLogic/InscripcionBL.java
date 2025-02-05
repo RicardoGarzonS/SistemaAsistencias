@@ -36,5 +36,9 @@ public class InscripcionBL {
     public boolean delete(int idInscripcion) throws Exception {
         return iDao.delete(idInscripcion);
     }
+
+    public String getFechaInscripcion (Integer idUsuario, Integer idMaterial) throws Exception {
+        return iDao.getFechaInscripcion(idUsuario, idMaterial);
+    }
 }
 
