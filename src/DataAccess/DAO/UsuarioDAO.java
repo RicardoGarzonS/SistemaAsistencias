@@ -151,4 +151,36 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
         
     }
 
+    public String getCorreo(String correo) throws Exception {
+        String correoUsuario = null;
+        String query = "SELECT CorreoInstitucional " + "FROM Usuario WHERE Estado = 'A' AND CorreoInstitucional = " + "'" + correo + "'";
+        try {
+            Connection conn = openConnection();
+            Statement  stmt = conn.createStatement();
+            ResultSet  rs   = stmt.executeQuery(query);
+            if (rs.next()) {
+                correoUsuario = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return correoUsuario;
+    }
+
+    public String getClaveUsuario(String clave) throws Exception {
+        String claveUsuario = null;
+        String query = "SELECT Clave " + "FROM Usuario WHERE Estado = 'A' AND Clave = " + "'" + clave + "'";
+        try {
+            Connection conn = openConnection();
+            Statement  stmt = conn.createStatement();
+            ResultSet  rs   = stmt.executeQuery(query);
+            if (rs.next()) {
+                claveUsuario = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return claveUsuario;
+    }
+
 }
