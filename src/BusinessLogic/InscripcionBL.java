@@ -46,5 +46,7 @@ public class InscripcionBL {
     public String[] getMateriaInscritas (Integer idUsuario) throws Exception {
         return iDAO.getMateriasInscritas(idUsuario);
     }
+
+
 }
 

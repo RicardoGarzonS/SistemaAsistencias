@@ -1,5 +1,6 @@
 package DataAccess.DAO;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import BusinessLogic.InscripcionBL;
 import BusinessLogic.MateriaBl;
+import BusinessLogic.UsuarioBL;
 import DataAccess.IDAO;
 import DataAccess.SQLiteDataHelper;
 import DataAccess.DTO.AsistenciaDTO;
@@ -167,6 +169,36 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         return totalRegistros;
     }
 
+    public Integer contarAsistenciasEstudianteEspecifico (String CorreoEstudiante, String fechaActual, String nombreMateria) throws Exception {
+        MateriaBl mBl = new MateriaBl();
+        InscripcionBL iBl = new InscripcionBL();
+        UsuarioBL uBl = new UsuarioBL();
+        int idMateria = mBl.getIdMateria(nombreMateria);
+        int idUsuario = uBl.getIdUsuarioPorCorreo(CorreoEstudiante);
+        String fechaInscripcion = iBl.getFechaInscripcion(idUsuario, idMateria);
+
+        String query = " SELECT COUNT (*) AS TotalReg " +
+                       " FROM Asistencia a " +
+                       " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                       " JOIN Clase c ON i.IdClase = c.IdClase " +
+                       " WHERE i.IdUsuario = " + idUsuario +
+                       " AND c.IdMateria = " + idMateria +
+                       " AND DATE('" + fechaActual + "') >= DATE('" + fechaInscripcion + "')";
+
+        int totalRegistros = 0;
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                totalRegistros = rs.getInt("TotalReg");
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return totalRegistros;
+    }
+
     public List<AsistenciaDTO> buscarAsistenciaPorUsuarioFechaLector(Integer idUsuario, String fecha, Integer idLector) throws Exception {
         List<AsistenciaDTO> asistencias = new ArrayList<>();
         String query = "SELECT a.IdAsistencia, a.IdInscripcion, a.Fecha, a.HoraEntrada, a.HoraSalida, a.Justificacion, a.Estado, a.FechaCreacion, a.FechaModificacion " 
@@ -243,4 +275,5 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         }
         return asistencias;
     }
+
 }

@@ -1,6 +1,6 @@
 package DataAccess.DAO;
 
-import java.net.Inet4Address;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -213,5 +213,24 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
         return materiasList.toArray(new String[0]);
     }
 
-        
+    public Integer [] getIdUsuariosPorMateria (Integer idMateria) throws Exception{
+        List<Integer> idUsuarios = new ArrayList<>();
+        String query = "SELECT i.IdUsuario FROM Inscripcion i " + 
+                       "JOIN Clase c ON i.IDClase = c.IDClase " + 
+                       "WHERE c.IDMateria = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idMateria);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                idUsuarios.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idUsuarios.toArray(new Integer[0]);
+    }
+
+    
 }
