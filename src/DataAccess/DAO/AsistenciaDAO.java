@@ -92,16 +92,14 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
 
     @Override
     public boolean create(AsistenciaDTO entity) throws Exception {
-         String query = "INSERT INTO Asistencia (IdInscripcion, Fecha ) VALUES (?,?,?)";
-        try {
-            Connection        conn  = openConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(2, entity.getIdInscripcion());
-            pstmt.setString(3, entity.getFecha());
+        String query = "INSERT INTO Asistencia (IdInscripcion, Fecha) VALUES (?, ?)";
+        try (Connection conn = openConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, entity.getIdInscripcion());
+            pstmt.setString(2, entity.getFecha());
             pstmt.executeUpdate();
-            return true;
-        } 
-        catch (SQLException e) {
+            return true; 
+        } catch (SQLException e) {
             throw e;//new Exception( e.getMessage(), getClass().getName(), "create()");
         }
     }

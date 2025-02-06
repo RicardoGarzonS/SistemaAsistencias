@@ -1,6 +1,5 @@
 package DataAccess.DAO;
 
-import java.net.Inet4Address;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +15,17 @@ import DataAccess.SQLiteDataHelper;
 import DataAccess.DTO.InscripcionDTO;
 
 public class InscripcionDAO extends SQLiteDataHelper implements IDAO<InscripcionDTO>{
+
+    public int obtenerUltimoIdInscripcion() throws Exception {
+        String query = "SELECT last_insert_rowid()";
+        try (Connection conn = openConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new Exception("Error al obtener el último ID de inscripción: " + e.getMessage());
+        }
+    }
 
     @Override
     public InscripcionDTO readBy(Integer id) throws Exception { 

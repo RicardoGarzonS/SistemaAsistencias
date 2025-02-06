@@ -1,9 +1,6 @@
 package BusinessLogic;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -34,7 +31,6 @@ public class InscripcionBL extends SQLiteDataHelper {
 
 
     public InscripcionBL() {
-        //TODO Auto-generated constructor stub
     }
 
 
@@ -58,9 +54,9 @@ public class InscripcionBL extends SQLiteDataHelper {
                 throw new Exception("Error al crear inscripción");
             }
 
-            int idInscripcion = obtenerUltimoIdInscripcion(conn);
+            int idInscripcion = iDAO.obtenerUltimoIdInscripcion();
 
-            int idDia = claseDAO.obtenerIdDiaPorIdClase(idClase, conn);
+            int idDia = claseDAO.obtenerIdDiaPorIdClase(idClase);
 
             generarAsistencias(idInscripcion, idDia, conn);
 
@@ -80,16 +76,6 @@ public class InscripcionBL extends SQLiteDataHelper {
         }
     }
 
-    private int obtenerUltimoIdInscripcion(Connection conn) throws Exception {
-        String query = "SELECT last_insert_rowid()";
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            new ExceptionLogger(e.getMessage(), this.getClass().getName(), "obtenerUltimoIdInscripcion");
-            throw new Exception("Error al obtener el último ID de inscripción: " + e.getMessage());
-        }
-    }
 
     private void generarAsistencias(int idInscripcion, int idDia, Connection conn) throws Exception {
         DayOfWeek diaClase = convertirIdDiaADiaSemana(idDia);
