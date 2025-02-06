@@ -12,15 +12,21 @@ public class UsuarioDTO {
     private String FechaCreacion      ;
     private String FechaModificacion  ;
 
-    public UsuarioDTO(String nombreUsuario) {
-        NombreUsuario = nombreUsuario;
-    }
 
     public UsuarioDTO() {}
-
-    public UsuarioDTO(String nombreUsuario, String cedula) {
+    public UsuarioDTO(String nombreUsuario, String cedula, String clave, String correoInstitucional) {
         this.NombreUsuario = nombreUsuario;
         this.Cedula = cedula;
+        this.Clave = clave;
+        this.CorreoInstitucional = correoInstitucional;
+    }
+
+    public UsuarioDTO(String nombreUsuario, String cedula, String clave, String correoInstitucional, String FechaModificacion) {
+        this.NombreUsuario = nombreUsuario;
+        this.Cedula = cedula;
+        this.Clave = clave;
+        this.CorreoInstitucional = correoInstitucional;
+        this.FechaModificacion = FechaModificacion;
     }
 
     public UsuarioDTO(String idUsuario, String idRol, String nombreUsuario, String clave,

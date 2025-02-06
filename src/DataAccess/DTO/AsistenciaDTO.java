@@ -13,6 +13,12 @@ private String FechaModificacion;
 
 public AsistenciaDTO() {}
 
+public AsistenciaDTO(String horaEntrada, String horaSalida, String fechaModificacion) {
+    this.HoraEntrada = horaEntrada;
+    this.HoraSalida = horaSalida;
+    this.FechaModificacion = fechaModificacion;
+}
+
 public AsistenciaDTO( String idInscripcion, String fecha) {
     this.IdInscripcion = idInscripcion;
     this.Fecha = fecha;

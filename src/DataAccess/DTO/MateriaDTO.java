@@ -8,6 +8,16 @@ public class MateriaDTO {
     private String FechaModificacion;
 
     public MateriaDTO() {}
+
+    public MateriaDTO(String IdMateria) {
+        this.IdMateria = IdMateria;
+    }
+
+    public MateriaDTO(String IdMateria, String Nombre, String FechaModifica) {
+        this.IdMateria = IdMateria;
+        this.Nombre = Nombre;
+        this.FechaModificacion = FechaModifica;
+    }
     public MateriaDTO(String IdMateria, String Nombre, String Estado, String FechaCreacion, String FechaModificacion) {
         this.IdMateria = IdMateria;
         this.Nombre = Nombre;

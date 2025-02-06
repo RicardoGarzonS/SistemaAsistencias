@@ -87,16 +87,15 @@ public class ClaseDAO extends SQLiteDataHelper implements IDAO<ClaseDTO>{
 
     @Override
     public boolean create(ClaseDTO entity) throws Exception {
-        String query = "INSERT INTO Clase (IdClase, IdMateria, IdDia, HoraInicio, HoraFin) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO Clase (IdMateria, IdDia, HoraInicio, HoraFin) VALUES (?,?,?,?,?)";
         try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
             
-            pstmt.setString(1, entity.getIdClase());
-            pstmt.setString(2, entity.getIdMateria());
-            pstmt.setString(3, entity.getIdDia());
-            pstmt.setString(4, entity.getHoraInicio());
-            pstmt.setString(5, entity.getHoraFin());
+            pstmt.setString(1, entity.getIdMateria());
+            pstmt.setString(2, entity.getIdDia());            
+            pstmt.setString(3, entity.getHoraInicio());
+            pstmt.setString(4, entity.getHoraFin());
             pstmt.executeUpdate();
             return true;
         } 
@@ -109,7 +108,7 @@ public class ClaseDAO extends SQLiteDataHelper implements IDAO<ClaseDTO>{
     public boolean update(ClaseDTO entity) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
        LocalDateTime now = LocalDateTime.now();
-       String query = "UPDATE Clase SET IdClase = ?, IdMateria = ?, IdDia = ?, HoraInicio = ?, HoraFin = ?, FechaModifica = ? WHERE IdClase = ?";
+       String query = "UPDATE Clase SET , IdMateria = ?, IdDia = ?, HoraInicio = ?, HoraFin = ?, FechaModifica = ? WHERE IdClase = ?";
        try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);

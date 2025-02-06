@@ -12,6 +12,22 @@ private String FechaModificacion;
 
 public InscripcionDTO() {}
 
+public InscripcionDTO(String idUsuario, String idClase, String idLector, String año) {
+    this.IdUsuario = idUsuario;
+    this.IdClase = idClase;
+    this.IdLector = idLector;
+    this.Año = año;
+}
+
+public InscripcionDTO(String IdUsuario, String IdClase, String IdLector, String Año,String FechaModificacion) {
+    this.IdUsuario = IdUsuario;
+    this.IdClase = IdClase;
+    this.IdLector = IdLector;
+    this.Año = Año;
+    this.FechaModificacion = FechaModificacion;
+}
+
+
 public InscripcionDTO(String IdInscripcion, String IdUsuario, String IdClase, String IdLector, String Año, String Estado, String FechaCreacion, String FechaModificacion) {
     this.IdInscripcion = IdInscripcion;
     this.IdUsuario = IdUsuario;

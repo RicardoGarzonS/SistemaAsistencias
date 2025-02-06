@@ -8,6 +8,18 @@ public class LectorDTO {
     private String FechaModificacion;
 
     public LectorDTO() {}
+
+    public LectorDTO(String IdLector, String CodigoAula) {
+        this.IdLector = IdLector;
+        this.CodigoAula = CodigoAula;
+        
+    }
+
+    public LectorDTO(String IdLector, String CodigoAula, String FechaModifica) {
+        this.IdLector = IdLector;
+        this.CodigoAula = CodigoAula;
+        this.FechaModificacion = FechaModifica;
+    }
     public LectorDTO(String IdLector, String CodigoAula, String Estado, String FechaCreacion, String FechaModificacion) {
         this.IdLector = IdLector;
         this.CodigoAula = CodigoAula;

@@ -15,6 +15,22 @@ private String FechaModificacion;
 
 public ClaseDTO() {}
 
+public ClaseDTO(String IdMateria, String IdDia, String HoraInicio, String HoraFin) {
+    this.IdMateria = IdMateria;
+    this.IdDia = IdDia;
+    this.HoraInicio = HoraInicio;
+    this.HoraFin = HoraFin;
+}
+
+public ClaseDTO(String IdClase, String IdMateria, String IdDia, String HoraInicio, String HoraFin, String FechaModifica) {
+    this.IdClase = IdClase;
+    this.IdMateria = IdMateria;
+    this.IdDia = IdDia;
+    this.HoraInicio = HoraInicio;
+    this.HoraFin = HoraFin;
+    this.FechaModificacion = FechaModifica;
+}
+
 public ClaseDTO(String IdClase, String IdMateria, String IdDia, String HoraInicio, String HoraFin, String Estado, String FechaCreacion, String FechaModificacion) {
     this.IdClase = IdClase;
     this.IdMateria = IdMateria;

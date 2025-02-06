@@ -8,6 +8,15 @@ public class DiaDTO {
     private String FechaModificacion;
 
     public DiaDTO() {}
+
+    public DiaDTO(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public DiaDTO(String Nombre, String FechaModifica) {
+        this.Nombre = Nombre;
+        this.FechaModificacion = FechaModifica;
+    }
     public DiaDTO(String IdDia, String Nombre, String Estado, String FechaCreacion, String FechaModificacion) {
         this.IdDia = IdDia;
         this.Nombre = Nombre;

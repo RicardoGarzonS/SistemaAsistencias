@@ -8,12 +8,22 @@ public class RolDTO {
     private String FechaModificacion;
 
     public RolDTO() {}
+
+    public RolDTO(String nombre) {
+        this.Nombre = nombre;
+    }
+
+    public RolDTO(String idRol, String nombre, String FechaModificacion) {
+        this.IdRol = idRol;
+        this.Nombre = nombre;
+        this.FechaModificacion = FechaModificacion;
+    }
     public RolDTO(String idRol, String nombre, String estado, String fechaCreacion, String fechaModificacion) {
-        IdRol = idRol;
-        Nombre = nombre;
-        Estado = estado;
-        FechaCreacion = fechaCreacion;
-        FechaModificacion = fechaModificacion;
+        this.IdRol = idRol;
+        this.Nombre = nombre;
+        this.Estado = estado;
+        this.FechaCreacion = fechaCreacion;
+        this.FechaModificacion = fechaModificacion;
     }
     public String getIdRol() {
         return IdRol;
