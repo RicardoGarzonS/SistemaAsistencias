@@ -46,7 +46,9 @@ public class AsistenciaBL {
         return aDAO.contarAsistenciasEstudianteEspecifico(correoEstudiante, fechaActual, nobreMateria);
     }
 
-    
+    public String [] contarAsistenciasEstudiantesPorMateria (String nombreMateria, String fechaActual) throws Exception {
+        return aDAO.contarAsistenciasTotalEstudiantes(nombreMateria, fechaActual);
+    }
     
 }
     

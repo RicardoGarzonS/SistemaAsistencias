@@ -276,4 +276,36 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         return asistencias;
     }
 
+    public String [] contarAsistenciasTotalEstudiantes (String nombreMateria, String fechaActual) throws Exception {
+        MateriaBl mBl = new MateriaBl();
+        InscripcionBL iBl = new InscripcionBL();
+        int idMateria = mBl.getIdMateria(nombreMateria);
+        String [] idEstudiantes = iBl.getIdEstudiantesPorMateria(idMateria);
+        String [] correoEstudiantes = iBl.getCorreosEstudiantesPorMateria(idMateria); 
+        int idEstReferenciaFecha = Integer.parseInt(idEstudiantes[0]);
+        String fechaInscripcion = iBl.getFechaInscripcion(idEstReferenciaFecha, idMateria);
+        String [] asistencias = new String [idEstudiantes.length];
+        String query = " SELECT COUNT (*) AS TotalReg " +
+                       " FROM Asistencia a " +
+                       " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                       " JOIN Clase c ON i.IdClase = c.IdClase " +
+                       " WHERE c.IdMateria = " + idMateria +
+                       " AND DATE('" + fechaActual + "') >= DATE('" + fechaInscripcion + "')" +
+                       " AND i.IdUsuario = ";
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            for (int i = 0; i < idEstudiantes.length; i++) {
+                ResultSet rs = stmt.executeQuery(query + idEstudiantes[i]);
+                if (rs.next()) {
+                    asistencias[i] = rs.getString("TotalReg") + " - " + correoEstudiantes[i];
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return asistencias;
+
+    }   
+
 }
