@@ -34,6 +34,10 @@ public class UsuarioBL {
         return uDAO.getRolUsuario(correoUsuario);
     }
 
+    public int getIdUsuarioPorCorreo (String correoUsuario) throws Exception {
+        return uDAO.getIDUsuarioPorCorreo(correoUsuario);
+    }
+
     public boolean create(UsuarioDTO usuarioDTO) throws Exception {
         if (usuarioDTO == null) {
             throw new Exception("¡El objeto UsuarioDTO no puede ser nulo!");

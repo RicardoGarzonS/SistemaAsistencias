@@ -130,8 +130,9 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
 
     public int getIdMateria (String nombreMateria) throws Exception {
         int idMateria = 0;
-        String query = "SELECT IdMateria FROM Materia WHERE Nombre = ? AND Estado = 'A'";
-
+        String query = "SELECT IdMateria FROM Materia"
+                     + " WHERE Nombre = ?" 
+                     + " AND Estado = 'A'";
         try {
             Connection conn = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
@@ -144,6 +145,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
             throw e;//new Exception( e.getMessage(), getClass().getName(), "getIdMateria()");
         }
         return idMateria;
+        
     }
 
 }

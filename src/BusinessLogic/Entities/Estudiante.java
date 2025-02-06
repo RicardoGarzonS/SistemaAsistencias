@@ -3,7 +3,6 @@ package BusinessLogic.Entities;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import BusinessLogic.AsistenciaBL;
@@ -26,6 +25,8 @@ public class Estudiante {
      * @param fechaInscripcion fecha de inscripcion del estudiante a la materia (tabla inscripcion)
      * @return
      */
+
+     // Maybe tengo que cambiar y no poder idMateria sino el nombre y luego sacar de la tabla el id, revisarlo
     public int asistenciasMateriaEspecifica (int idUsuario,int idMateria) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -37,6 +38,12 @@ public class Estudiante {
         return aBl.contarAsistenciasMateriaEspecifica(idUsuario, fechaActual, idMateria);
     }
 
+    /***
+     * 
+     * @param idUsuario id del usuario, maybe se deba cambiar al correo o al codigo unico
+     * @return el total de asistencias de todas las materias inscritas por el estudiante, aun no contemplo la posibilidad de que existan justificantes
+     * @throws Exception
+     */
     public String [] asistenciasTotalMaterias (Integer idUsuario) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
