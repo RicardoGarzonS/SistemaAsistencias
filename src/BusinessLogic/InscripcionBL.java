@@ -43,8 +43,16 @@ public class InscripcionBL {
         return iDAO.getFechaInscripcion(idUsuario, idMaterial);
     }
 
-    public String[] getMateriaInscritas (Integer idUsuario) throws Exception {
+    public String [] getMateriaInscritas (Integer idUsuario) throws Exception {
         return iDAO.getMateriasInscritas(idUsuario);
+    }
+
+    public String [] getIdEstudiantesPorMateria (int idMateria) throws Exception {
+        return iDAO.getIdUsuariosPorMateria(idMateria);
+    }
+
+    public String [] getCorreosEstudiantesPorMateria (int idMateria) throws Exception {
+        return iDAO.getCorreoEstudiantesPorMateria(idMateria);
     }
 
 

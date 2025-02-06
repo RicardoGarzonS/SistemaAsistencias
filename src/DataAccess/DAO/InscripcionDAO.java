@@ -213,8 +213,8 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
         return materiasList.toArray(new String[0]);
     }
 
-    public Integer [] getIdUsuariosPorMateria (Integer idMateria) throws Exception{
-        List<Integer> idUsuarios = new ArrayList<>();
+    public String [] getIdUsuariosPorMateria (Integer idMateria) throws Exception{
+        List<String> idUsuarios = new ArrayList<>();
         String query = "SELECT i.IdUsuario FROM Inscripcion i " + 
                        "JOIN Clase c ON i.IDClase = c.IDClase " + 
                        "WHERE c.IDMateria = ?";
@@ -224,12 +224,32 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
             pstmt.setInt(1, idMateria);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                idUsuarios.add(rs.getInt(1));
+                idUsuarios.add(rs.getString(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return idUsuarios.toArray(new Integer[0]);
+        return idUsuarios.toArray(new String[0]);
+    }
+
+    public String [] getCorreoEstudiantesPorMateria (Integer idMateria) throws Exception{
+        List<String> correos = new ArrayList<>();
+        String query = "SELECT u.CorreoInstitucional FROM Usuario u " + 
+                       "JOIN Inscripcion i ON u.IDUsuario = i.IDUsuario " + 
+                       "JOIN Clase c ON i.IDClase = c.IDClase " + 
+                       "WHERE c.IDMateria = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idMateria);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                correos.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return correos.toArray(new String[0]);
     }
 
     

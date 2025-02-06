@@ -1,9 +1,10 @@
 package BusinessLogic.Entities;
 
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
+import java.util.Arrays;
 
 import BusinessLogic.AsistenciaBL;
 
@@ -25,6 +26,17 @@ public class Docente {
         System.out.println(aBl.contarAsistenciasEstudianteEspecifico(correoEstudiante, fechaActual, nombreMateria));
         return aBl.contarAsistenciasEstudianteEspecifico(correoEstudiante, fechaActual, nombreMateria);
         
+    }
+
+    public String [] asistenciasTotalEstudiantes (String nombreMateria) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        System.out.println(Arrays.toString(aBl.contarAsistenciasEstudiantesPorMateria(nombreMateria, fechaActual)));
+        return aBl.contarAsistenciasEstudiantesPorMateria(nombreMateria, fechaActual);
     }
 
 }
