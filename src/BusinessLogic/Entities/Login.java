@@ -11,12 +11,11 @@ public class Login {
         String claveUsuario = usuarioBL.getClaveUsuario(clave);
         
         if (correo.equals(correoUsuario) && clave.equals(claveUsuario)) {
-            
-            Integer rolUsuario = usuarioBL.getRolUsuario(correo);
-            System.out.println("Sirve" + rolUsuario);
-            return rolUsuario;
+            Integer idUsuario = usuarioBL.getIdUsuarioPorCorreo(correo);
+            System.out.println("Sirve" + idUsuario);
+            return idUsuario;
         } else {
-            System.out.println("correoUsuario sirve");
+            System.out.println("correoUsuario no sirve");
             return -1;
         }
     }

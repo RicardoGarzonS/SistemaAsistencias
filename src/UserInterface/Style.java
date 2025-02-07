@@ -18,7 +18,7 @@ public abstract class Style {
     public static final Color COLOR_FONT_LIGHT = new Color(255, 255, 255);
     public static final Color COLOR_CURSOR = Color.black;
     public static final Color COLOR_BORDER = Color.black;
-    public static final Font  FONT         = new Font("JetBrains Mono", Font.PLAIN, 14);
+    public static final Font  FONT         = new Font("Century Gothic", Font.PLAIN, 20);
     public static final Font  FONT_TTL     = new Font("Century Gothic", Font.BOLD, 85);
     public static final Font  FONT_BOLD    = new Font("JetBrains Mono", Font.BOLD | Font.PLAIN, 14);
     public static final Font  FONT_SMALL   = new Font("JetBrains Mono", Font.PLAIN| Font.PLAIN, 10);

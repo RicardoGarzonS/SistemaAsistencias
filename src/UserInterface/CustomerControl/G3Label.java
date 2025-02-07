@@ -22,6 +22,7 @@ public class G3Label extends JLabel{
         setOpaque(false);
         setBackground(null);
         setForeground(color);
+        setHorizontalAlignment(Style.ALIGNMENT_LEFT);
         //setIcon(new ImageIcon(iconPath));
     }
 }

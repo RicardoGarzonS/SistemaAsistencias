@@ -1,5 +1,9 @@
 package UserInterface.Form;
 
+import BusinessLogic.Entities.Login;
+import BusinessLogic.UsuarioBL;
+import DataAccess.DTO.UsuarioDTO;
+import Framework.ExceptionLogger;
 import UserInterface.CustomerControl.*;
 import UserInterface.Style;
 import java.awt.Color;
@@ -12,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LogInForm extends JFrame{
+    private MainForm padre;
+    private Login lg;
+    private UsuarioBL ubl;
     final int ESCALA = 70;
     final int ALTO   = ESCALA * 9;
     final int ANCHO  = ESCALA * 16;
@@ -41,9 +48,12 @@ public class LogInForm extends JFrame{
 
     //final   JPanel  logoPanel           = new JPanel();
 
-    public LogInForm(String titulo) {
+    public LogInForm(String titulo, MainForm p) {
+        padre = p;
         customizeComponent(titulo);
-        loginBtn.addActionListener ( e -> System.out.println("Aqui va el metodo de login")); 
+        lg = new Login();
+        ubl = new UsuarioBL();
+        loginBtn.addActionListener ( e -> login()); 
         setVisible(true);
     }
 
@@ -138,6 +148,35 @@ public class LogInForm extends JFrame{
         fondo.add(loginPanel);
         fondo.add(logo);
         add(fondo);
-        
     }   
+
+    private void login(){
+        setVisible(false);
+        int idUsuario = -1;
+        try {
+            idUsuario = lg.loginCuenta(usuarioTxt.getText(), claveTxt.getText());
+        } catch (Exception e) {
+            Style.showMsgError("Credenciales no validas");
+            new ExceptionLogger(e.getMessage(), this.getClass().getName(), "InicioSesion");
+        }
+        if(idUsuario != - 1 ){
+            try {
+                UsuarioDTO us = ubl.getByIdUsuario(idUsuario);
+                switch (Integer.valueOf(us.getIdRol())) {
+                    case 1:
+                        padre.mostrarEstudiante(us);
+                        break;
+                    default:
+                        padre.mostrarLogin();
+                        break;
+                }
+            } catch (Exception e) {
+                Style.showMsgError("Credenciales no validas");
+                new ExceptionLogger(e.getMessage(), this.getClass().getName(), "InicioSesion");
+            }
+        }else{
+            Style.showMsgError("Credenciales no validas");
+            padre.mostrarLogin();
+        }
+    }
 }

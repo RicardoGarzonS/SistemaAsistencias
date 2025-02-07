@@ -36,14 +36,14 @@ public class G3Button  extends JButton implements MouseListener {
     }
     public void customizeComponent(String text) {
         setText(text);
-        setFocusPainted(false);
-        setBorderPainted(false);
-        setContentAreaFilled(false);
+        // setFocusPainted(false);
+        // setBorderPainted(false);
+        // setContentAreaFilled(false);
         setForeground(Style.COLOR_FONT);
-        setHorizontalAlignment(Style.ALIGNMENT_LEFT);
-        setFont(new Font("Century Gothic", Font.PLAIN, (getHeight() / 7) * 4));
+        setHorizontalAlignment(Style.ALIGNMENT_CENTER);
+        setFont(Style.FONT);
         
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setCursor(new Cursor(Cursor.HAND_CURSOR)); 
     }
     public void customizeComponent(String text, Rectangle area) {
         setBounds(area);
