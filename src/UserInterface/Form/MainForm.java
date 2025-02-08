@@ -25,4 +25,11 @@ public class MainForm {
         af = null;
         sf = new StudentForm(us, this);
     }
+
+    public void mostrarProfesor(UsuarioDTO us){
+        lg = null;
+        sf = null;
+        af = null;
+        tf = new TeacherForm(us, this);
+    }
 }
