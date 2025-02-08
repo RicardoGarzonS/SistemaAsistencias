@@ -263,5 +263,44 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
         return correos.toArray(new String[0]);
     }
 
+    public String [] getHoraInicioTotalMaterias (Integer idEstudiante) throws Exception {
+        List<String> horasInicio = new ArrayList<>();
+        String query = "SELECT c.HoraInicio FROM Clase c " + 
+                       "JOIN Inscripcion i ON c.IDClase = i.IDClase " +
+                       "WHERE i.IDUsuario = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idEstudiante);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                horasInicio.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return horasInicio.toArray(new String[0]);
+    }
+
+    public String [] getHoraFinTotalMaterias (Integer idEstudiante) throws Exception {
+        List<String> horasInicio = new ArrayList<>();
+        String query = "SELECT c.HoraFin FROM Clase c " + 
+                       "JOIN Inscripcion i ON c.IDClase = i.IDClase " +
+                       "WHERE i.IDUsuario = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idEstudiante);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                horasInicio.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return horasInicio.toArray(new String[0]);
+    }
+
+
     
 }

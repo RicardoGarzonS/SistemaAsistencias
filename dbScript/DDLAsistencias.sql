@@ -107,6 +107,6 @@ CREATE TABLE Asistencia (
     ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
-SELECT i.IdUsuario FROM Inscripcion i  
-                       JOIN Clase c ON i.IDClase = c.IDClase  
-                       WHERE c.IDMateria = 1;
+SELECT HoraEntrada, HoraSalida 
+                       FROM Asistencia 
+                       WHERE IdAsistencia = 4
