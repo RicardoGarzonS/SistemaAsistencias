@@ -138,5 +138,13 @@ public class InscripcionBL extends SQLiteDataHelper {
         return iDAO.getCorreoEstudiantesPorMateria(idMateria);
     }
 
+    public String [] getHoraInicioTotalMaterias (int idEstudiante) throws Exception {
+        return iDAO.getHoraInicioTotalMaterias(idEstudiante);
+    }
+
+    public String [] getHoraFinTotalMaterias (int idEstudiante) throws Exception {
+        return iDAO.getHoraFinTotalMaterias(idEstudiante);
+    }
+
 
 }

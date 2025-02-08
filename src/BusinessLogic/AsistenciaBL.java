@@ -49,6 +49,10 @@ public class AsistenciaBL {
     public String [] contarAsistenciasEstudiantesPorMateria (String nombreMateria, String fechaActual) throws Exception {
         return aDAO.contarAsistenciasTotalEstudiantes(nombreMateria, fechaActual);
     }
+
+    public String [][] tablaAsistenciasTotalMateriasE (int idEstudiante, String fechaActual) throws Exception {
+        return aDAO.tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
+    }
     
 }
     
