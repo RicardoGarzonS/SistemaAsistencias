@@ -16,32 +16,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LogInForm extends JFrame{
-    private MainForm padre;
-    private Login lg;
-    private UsuarioBL ubl;
-    final int ESCALA = 70;
-    final int ALTO   = ESCALA * 9;
-    final int ANCHO  = ESCALA * 16;
+    private MainForm    padre;
+    private Login       lg;
+    private UsuarioBL   ubl;
+    final   int         ESCALA          = 70;
+    final   int         ALTO            = ESCALA * 9;
+    final   int         ANCHO           = ESCALA * 16;
 
     private JLabel      fondo;
     private JLabel      logo;
-    private G3Panel     ttlPanel;
-    final   G3Label     ttlLabel        = new G3Label("SISTEMA DE ASISTENCIA");
+    private G3Label     ttlLabel;
 
     private JPanel      loginPanel      = new JPanel();
-    private G3Panel     loginTtlPanel;
-    final   G3Label     loginTtlLabel   = new G3Label("Inicio de sesion");
+    private G3Label     loginTtlLabel;
 
     // private G3Panel     rolPanel;
-    // final   G3Label     rolLabel        = new G3Label("ROL");
+    // final   G3Label     rolLabel     = new G3Label("ROL");
     // private JComboBox   rolSelect;
 
-    private G3Panel     usuarioPanel;
-    final   G3Label     usuarioLabel    = new G3Label("CORREO");
+    private G3Label     usuarioLabel;
     private G3TextBox   usuarioTxt;
 
-    private G3Panel     clavePanel;
-    final   G3Label     claveLabel      = new G3Label("CLAVE");
+    private G3Label     claveLabel;
     private G3TextBox   claveTxt;
 
     private G3Button    loginBtn;
@@ -91,16 +87,14 @@ public class LogInForm extends JFrame{
         int anchoLbl   = ANCHO / 7;
         int anchoTxt   = (anchoLbl * 3) / 2;
         
-        ttlPanel = new G3Panel(Style.COLOR_ACCENT, new Rectangle(xTtlP, yTtlP, anchoTtlP, altoTtlP));
-        ttlPanel.agregarTexto(ttlLabel);
+        ttlLabel = new G3Label("SISTEMA DE ASISTENCIA", new Rectangle(xTtlP, yTtlP, anchoTtlP, altoTtlP));
 
         loginPanel.setBackground(new Color(255, 255, 255, 166));
         loginPanel.setBounds(xTtlP, yPnl, anchoPnl, altoPnl);
         loginPanel.setLayout(null);
 
-        loginTtlPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(0, 0, anchoPnl, altoTtl));
-        loginTtlPanel.agregarTexto(loginTtlLabel);
-        loginPanel.add(loginTtlPanel);
+        loginTtlLabel = new G3Label("INICIO DE SESION", new Rectangle(0, 0, anchoPnl, altoTtl));
+        loginPanel.add(loginTtlLabel);
 
         // rolPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
         // rolPanel.agregarTexto(rolLabel);
@@ -112,21 +106,19 @@ public class LogInForm extends JFrame{
         // rolSelect.setBounds(new Rectangle(rolPanel.getX() + anchoLbl, rolPanel.getY(), anchoTxt, altoLbl));
         // loginPanel.add(rolSelect);
 
-        usuarioPanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
-        usuarioPanel.agregarTexto(usuarioLabel);
-        loginPanel.add(usuarioPanel);
+        usuarioLabel = new G3Label("CORREO", new Rectangle(tabulacion, altoTtl + separacion, anchoLbl, altoLbl));
+        loginPanel.add(usuarioLabel);
 
-        usuarioTxt = new G3TextBox(new Rectangle(usuarioPanel.getX() + anchoLbl, usuarioPanel.getY(), anchoTxt, altoLbl));
+        usuarioTxt = new G3TextBox(new Rectangle(usuarioLabel.getX() + anchoLbl, usuarioLabel.getY(), anchoTxt, altoLbl));
         loginPanel.add(usuarioTxt);
 
-        clavePanel = new G3Panel(Style.COLOR_ACCENT_SOLID, new Rectangle(tabulacion, usuarioPanel.getY() + altoLbl + separacion, anchoLbl, altoLbl));
-        clavePanel.agregarTexto(claveLabel);
-        loginPanel.add(clavePanel);
+        claveLabel = new G3Label("CLAVE", new Rectangle(tabulacion, usuarioLabel.getY() + altoLbl + separacion, anchoLbl, altoLbl));
+        loginPanel.add(claveLabel);
 
-        claveTxt = new G3TextBox(new Rectangle(clavePanel.getX() + anchoLbl, clavePanel.getY(), anchoTxt, altoLbl));
+        claveTxt = new G3TextBox(new Rectangle(claveLabel.getX() + anchoLbl, claveLabel.getY(), anchoTxt, altoLbl));
         loginPanel.add(claveTxt);
 
-        loginBtn = new G3Button("INGRESAR", new Rectangle((anchoPnl - anchoLbl) / 2, clavePanel.getY() + altoLbl + separacion, anchoLbl, altoLbl));
+        loginBtn = new G3Button("INGRESAR", new Rectangle((anchoPnl - anchoLbl) / 2, claveLabel.getY() + altoLbl + separacion, anchoLbl, altoLbl));
         loginBtn.setBackground(Style.COLOR_ACCENT_SOLID);
         loginBtn.setForeground(Style.COLOR_FONT_LIGHT);
         loginPanel.add(loginBtn);
@@ -144,7 +136,7 @@ public class LogInForm extends JFrame{
             e.printStackTrace();
         }
         
-        fondo.add(ttlPanel);
+        fondo.add(ttlLabel);
         fondo.add(loginPanel);
         fondo.add(logo);
         add(fondo);
