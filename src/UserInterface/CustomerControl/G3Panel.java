@@ -23,6 +23,7 @@ public class G3Panel extends JPanel {
     }
     
     public void customizeComponent() {
+        setLayout(null);
         if (bordes != null){
             setBounds(bordes);
             texto.setBounds(0, 0, getWidth(), getHeight());
@@ -31,6 +32,8 @@ public class G3Panel extends JPanel {
         ponerBorde();
         texto.setFont(new Font("Century Gothic", Font.BOLD, (getHeight() / 7) * 4));
         setBackground(color);
+        repaint();
+        revalidate();
     }
     public void agregarTexto(JLabel txt){
         texto = txt;
