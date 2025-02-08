@@ -53,6 +53,10 @@ public class AsistenciaBL {
     public String [][] tablaAsistenciasTotalMateriasE (int idEstudiante, String fechaActual) throws Exception {
         return aDAO.tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
     }
+
+    public String [][] tablaConteoTipoAsistencias (int idEstudiante, String fechaActual) throws Exception {
+        return aDAO.tablaConteoTipoAsistencias(idEstudiante, fechaActual);
+    }
     
 }
     

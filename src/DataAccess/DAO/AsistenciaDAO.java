@@ -369,6 +369,37 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         return asistencias;
     }
 
+    public String [][] tablaConteoTipoAsistencias (int idEstudiante, String fechaActual) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+
+        String [][] tablaAsistencias = tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
+        String [] materias = iBL.getMateriaInscritas(idEstudiante);
+        String [] materiasSinRepeticion = eliminarRepeticion(materias);
+        int totalAsistencias = 0;
+        int totalAtrasos = 0;
+        int totalFaltas = 0;
+
+        String [][] asistenciasTipo = new String [materiasSinRepeticion.length][4];
+        for (int i=0; i<tablaAsistencias.length; i++){
+            if (tablaAsistencias[i][4].equals("2")){
+                totalAsistencias++;
+            } else if (tablaAsistencias[i][4].equals("1")){
+                totalAtrasos++;
+            } else if (tablaAsistencias[i][4].equals("0")){
+                totalAsistencias++;
+            }
+        }
+
+        for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            asistenciasTipo[i][0] = materiasSinRepeticion[i];
+            asistenciasTipo[i][1] = String.valueOf(totalAsistencias);
+            asistenciasTipo[i][2] = String.valueOf(totalAtrasos);
+            asistenciasTipo[i][3] = String.valueOf(totalFaltas);
+        }
+
+        return asistenciasTipo;
+    }
+
     public int contarRegistrosTotalMaterias (int idEstudiante, Integer[] idMaterias, String fechaActual, String fechaInscripcion) throws Exception {
         int totalRegistros = 0;
         String query = " SELECT COUNT(*) AS TotalReg " +
