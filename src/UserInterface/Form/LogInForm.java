@@ -158,6 +158,8 @@ public class LogInForm extends JFrame{
                     case 1:
                         padre.mostrarEstudiante(us);
                         break;
+                    case 2:
+                        padre.mostrarProfesor(us);
                     default:
                         padre.mostrarLogin();
                         break;

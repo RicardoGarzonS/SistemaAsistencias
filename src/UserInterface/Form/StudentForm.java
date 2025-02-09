@@ -156,10 +156,11 @@ public class StudentForm extends JFrame{
         horarioPnl.removeAll();
         String[] header = {"Hora", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
         Object[][] data = new Object[6][6];
-        
+        /*
+         * Aqui va el metodo para poner el horario en Object [][] data
+         */
         horario = new JTable(data, header);
         horario.setShowHorizontalLines(true);
-        //horario.setShowVerticalLines(true);
         horario.setGridColor(Style.COLOR_FONT);
         horario.setBackground(Style.COLOR_FONT_LIGHT);
         horario.setForeground(Style.COLOR_ACCENT_SOLID);
@@ -175,10 +176,11 @@ public class StudentForm extends JFrame{
         historicoPnl.removeAll();
         String[] header = {"Fecha", "Hora", "Materia", "Asistencia"};
         Object[][] data = new Object[12][4];
-
+        /*
+         * Aqui va el metodo para poner todas las asistencias (Ausente 0, Atrasado 1, Presente 2) del usuario en Object [][] data
+         */
         historico = new JTable(data, header);
         historico.setShowHorizontalLines(true);
-        //historico.setShowVerticalLines(true);
         historico.setGridColor(Style.COLOR_FONT);
         historico.setRowSelectionAllowed(true);
         historico.setColumnSelectionAllowed(false);
@@ -192,10 +194,11 @@ public class StudentForm extends JFrame{
         resumenPnl.removeAll();
         String[] header = {"Materia", "Asistencias", "Atrasos", "Inasistencias"};
         Object[][] data = new Object[6][4];
-
+        /*
+         * Aqui va el metodo para poner el total de asistencias, atrasos e inasistencias del usuario en Object [][] data
+         */
         resumen = new JTable(data, header);
         resumen.setShowHorizontalLines(true);
-        //resumen.setShowVerticalLines(true);
         resumen.setGridColor(Style.COLOR_FONT);
         resumen.setRowSelectionAllowed(true);
         resumen.setColumnSelectionAllowed(false);

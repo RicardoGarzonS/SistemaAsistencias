@@ -1,11 +1,5 @@
 package BusinessLogic;
 
-import java.sql.Connection;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.List;
-
 import DataAccess.DAO.AsistenciaDAO;
 import DataAccess.DAO.ClaseDAO;
 import DataAccess.DAO.InscripcionDAO;
@@ -14,6 +8,11 @@ import DataAccess.DTO.InscripcionDTO;
 import DataAccess.SQLiteDataHelper;
 import Framework.ExceptionLogger;
 import UserInterface.Style;
+import java.sql.Connection;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 
 public class InscripcionBL extends SQLiteDataHelper {
     private InscripcionDAO iDAO;
@@ -31,6 +30,7 @@ public class InscripcionBL extends SQLiteDataHelper {
 
 
     public InscripcionBL() {
+        iDAO = new InscripcionDAO();
     }
 
 

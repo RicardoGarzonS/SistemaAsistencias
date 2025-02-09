@@ -1,6 +1,7 @@
 // import UserInterface.Form.MainForm;
 
 import DataAccess.DAO.AsistenciaDAO;
+import UserInterface.Form.MainForm;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -23,5 +24,6 @@ public class App {
         }
         System.out.println();
        }
+       MainForm m = new MainForm();
     }
 }
