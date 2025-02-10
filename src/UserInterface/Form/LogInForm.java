@@ -89,7 +89,7 @@ public class LogInForm extends JFrame{
         int anchoLbl   = ANCHO / 7;
         int anchoTxt   = (anchoLbl * 3) / 2;
         
-        ttlLabel = new G3Label("SISTEMA DE ASISTENCIA", new Rectangle(xTtlP, yTtlP, anchoTtlP, altoTtlP));
+        ttlLabel = new G3Label("SISTEMA AURA", new Rectangle(xTtlP, yTtlP, anchoTtlP, altoTtlP));
 
         loginPanel.setBackground(new Color(255, 255, 255, 166));
         loginPanel.setBounds(xTtlP, yPnl, anchoPnl, altoPnl);
