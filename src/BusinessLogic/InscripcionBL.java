@@ -122,34 +122,85 @@ public class InscripcionBL extends SQLiteDataHelper {
         return iDAO.delete(idInscripcion);
     }
 
+    /***
+     * 
+     * @param idUsuario id del usario
+     * @param idMaterial id de la materia
+     * @return la fecha de inscripcion del usuario a la materia
+     * @throws Exception
+     */
     public String getFechaInscripcion(Integer idUsuario, Integer idMaterial) throws Exception {
         return iDAO.getFechaInscripcion(idUsuario, idMaterial);
     }
 
+    /***
+     * 
+     * @param idUsuario id del usuario
+     * @return arreglo de las materias inscritas por el usuario
+     * @throws Exception
+     */
     public String [] getMateriaInscritas (Integer idUsuario) throws Exception {
         return iDAO.getMateriasInscritas(idUsuario);
     }
 
+    /***
+     * 
+     * @param idMateria id de la materia
+     * @return arreglo de los id de los estudiantes inscritos en la materia
+     * @throws Exception
+     */
     public String [] getIdEstudiantesPorMateria (int idMateria) throws Exception {
         return iDAO.getIdUsuariosPorMateria(idMateria);
     }
 
+    /***
+     * 
+     * @param idMateria id de la materia
+     * @return arreglo de los correos de los estudiantes inscritos en la materia
+     * @throws Exception
+     */
     public String [] getCorreosEstudiantesPorMateria (int idMateria) throws Exception {
         return iDAO.getCorreoEstudiantesPorMateria(idMateria);
     }
 
+    /***
+     * 
+     * @param idEstudiante id del estudiante
+     * @param idMateria id de la materia
+     * @return la hora de inicio de la materia
+     * @throws Exception
+     */
     public String getHoraInicioPorMateria (int idEstudiante, int idMateria) throws Exception {
         return iDAO.getHoraInicioPorMateria(idEstudiante, idMateria);
     }
 
+    /***
+     * 
+     * @param idEstudiante id del estudiante
+     * @param idMateria id de la materia
+     * @return la hora de fin de la materia
+     * @throws Exception
+     */
     public String getHoraFinPorMateria (Integer idEstudiante, Integer idMateria) throws Exception {
         return iDAO.getHoraFinPorMateria(idEstudiante, idMateria);
     }
 
+    /***
+     * 
+     * @param idEstudiante id del estudiante
+     * @return arreglo de los id de estudiantes inscritos en la materia por el rol
+     * @throws Exception
+     */
     public Integer [] getIdEstudiantesPorMateriaRolE (int idEstudiante) throws Exception {
         return iDAO.getIdEstudiantesPorMateriaRolE(idEstudiante);
     }
 
+    /***
+     * 
+     * @param idUsuario id del usuario
+     * @return arreglo de las materias inscritas por el usuario (horario)
+     * @throws Exception
+     */
     public String [][] getHorario (Integer idUsuario) throws Exception {
         return iDAO.getHorarioById(idUsuario);
     }

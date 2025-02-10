@@ -39,7 +39,7 @@ public class RolDAO extends SQLiteDataHelper implements IDAO<RolDTO>{
                         , rs.getString(5));
                     }
                 } catch (SQLException e) {
-                    throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+                    throw e;
                 }
                 return rol;  
     }
@@ -68,7 +68,7 @@ public class RolDAO extends SQLiteDataHelper implements IDAO<RolDTO>{
                         roles.add(rol);
                     }
                 } catch (SQLException e) {
-                    throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+                    throw e;
                 }
                 return roles;  
     }
@@ -85,7 +85,7 @@ public class RolDAO extends SQLiteDataHelper implements IDAO<RolDTO>{
             return true;
         } 
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "create()");
+            throw e;
         }
     }
 
@@ -105,7 +105,7 @@ public class RolDAO extends SQLiteDataHelper implements IDAO<RolDTO>{
             return true;
     }
     catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "update()");
+            throw e;
         }
     }
 
@@ -121,7 +121,7 @@ public class RolDAO extends SQLiteDataHelper implements IDAO<RolDTO>{
             return true;
         }
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "delete()");
+            throw e;
         }
     }
 

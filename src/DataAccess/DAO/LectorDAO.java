@@ -39,7 +39,7 @@ public class LectorDAO extends SQLiteDataHelper implements IDAO<LectorDTO>{
                         , rs.getString(5));
                     }
                 } catch (SQLException e) {
-                    throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+                    throw e;
                 }
                 return lector; 
     }
@@ -68,7 +68,7 @@ public class LectorDAO extends SQLiteDataHelper implements IDAO<LectorDTO>{
                         lectores.add(lector);
                     }
                 } catch (SQLException e) {
-                    throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+                    throw e;
                 }
                 return lectores; 
     }
@@ -86,7 +86,7 @@ public class LectorDAO extends SQLiteDataHelper implements IDAO<LectorDTO>{
             return true;
         } 
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "create()");
+            throw e;
         }
     }
 
@@ -106,7 +106,7 @@ public class LectorDAO extends SQLiteDataHelper implements IDAO<LectorDTO>{
             return true;
     }
     catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "update()");
+            throw e;
         }
     }
 
@@ -122,7 +122,7 @@ public class LectorDAO extends SQLiteDataHelper implements IDAO<LectorDTO>{
             return true;
         }
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "delete()");
+            throw e;
         }
 
     }

@@ -29,6 +29,12 @@ public class Docente {
         
     }
 
+    /***
+     * 
+     * @param nombreMateria nombre de la materia de la cual se busca otener las asitencias 
+     * @return  retorna un arreglo con el numero de asistencias de cada estudiante
+     * @throws Exception
+     */
     public String [] asistenciasTotalEstudiantes (String nombreMateria) throws Exception{
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -40,6 +46,12 @@ public class Docente {
         return aBl.contarAsistenciasEstudiantesPorMateria(nombreMateria, fechaActual);
     }
 
+    /***
+     * 
+     * @param idDocente el id del docente/profesor 
+     * @return arreglo el cual es el conteo de asistenicas del total de estudiantes por cada matria del profesor
+     * @throws Exception
+     */
     public String [][] tablaConteoAsistenciasTotalEYMProfesor (Integer idDocente) throws Exception{
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -51,6 +63,13 @@ public class Docente {
         return aBl.tablaConteoAsistenciasTotalEYMProfesor(idDocente, fechaActual);
     }
 
+
+    /***
+     * 
+     * @param idDocente id del docente/profesor
+     * @return  arreglo con el conteo de asistencias de cada estudiante por cada materia del profesor
+     * @throws Exception
+     */
     public String [][] tablaConteoTipoAsistenciasDME (Integer idDocente) throws Exception{
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -62,6 +81,13 @@ public class Docente {
         return aBl.tablaConteoTipoAsistenciasDME(idDocente, fechaActual);
     }
 
+
+    /***
+     * 
+     * @param idDocente id del docente/profesor
+     * @return arrelgo del total de asistenicas del profesor 
+     * @throws Exception
+     */
     public String [][] totalAsistenciasTotalMateriasD (Integer idDocente) throws Exception{
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -71,7 +97,13 @@ public class Docente {
         AsistenciaBL aBl = new AsistenciaBL();
         return aBl.tablaAsistenciasTotalMateriasD(idDocente, fechaActual);
     }
-
+    
+    /***
+     * 
+     * @param idDocente id del docente/profesor
+     * @return arreglo del conteo del tipo de asistencias del profesor
+     * @throws Exception
+     */
     public String [][] totalAsistenciasTipoD (Integer idDocente) throws Exception{
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -82,6 +114,12 @@ public class Docente {
         return aBl.tablaConteoTipoAsistenciasD(idDocente, fechaActual);
     }
 
+    /***
+     * 
+     * @param idDocente id del profesor
+     * @return arreglo que hace referencia al horario del docente
+     * @throws Exception
+     */
     public String [][] tablaHorarioD (Integer idDocente) throws Exception {
         InscripcionBL iBl = new InscripcionBL();
         return iBl.getHorario(idDocente);

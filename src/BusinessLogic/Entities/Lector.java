@@ -11,21 +11,17 @@ import BusinessLogic.AsistenciaBL;
 import DataAccess.DTO.AsistenciaDTO;
 
 public class Lector {
-
     AsistenciaBL aBL = new AsistenciaBL();
 
-    // protected int lecturaTarjeta (){
-
-    //     Scanner sc = new Scanner(System.in);
-    //     System.out.println("(No se si borrarlo) Ingrese la tarjeta");
-    //     String stringTarjeta = sc.nextLine();
-    //     int retorno = Integer.parseInt(stringTarjeta);
-    //     sc.close();
-    //     return retorno;
-    // }
-
+    /***
+     * 
+     * @param lecturaTxt un textfield donde se va a escribir la tarjeta (codigo unico del usuario)
+     * @param entity un objeto de tipo AsistenciaDTO, sirve para modificar el registro
+     * @return
+     */
     public KeyListener obtenerKeyListenerEntrada(JTextField lecturaTxt, AsistenciaDTO entity) {
         return new KeyListener() {
+            
             @Override
             public void keyTyped(KeyEvent e) {
                 // Aquí no haces nada
@@ -53,6 +49,12 @@ public class Lector {
         };
     }
 
+    /***
+     * 
+     * @param tarjeta codigo unico del usuario
+     * @param entity un objeto de tipo AsistenciaDTO, sirve para modificar el registro
+     * @throws Exception
+     */
     private void procesarTarjetaEntrada(Integer tarjeta, AsistenciaDTO entity) throws Exception{
         // Aquí puedes hacer lo que necesites con la tarjeta, como actualizar la base de datos
         System.out.println("Tarjeta leída: " + tarjeta);
@@ -62,7 +64,12 @@ public class Lector {
         aBL.updateHoraEntrada(entity, fechaActual, aBL.getIdAsistenciaByIdUsuarioYFecha(tarjeta, fechaActual));
     }
 
-
+    /***
+     * 
+     * @param lecturaTxt un textfield donde se va a escribir la tarjeta (codigo unico del usuario)
+     * @param entity un objeto de tipo AsistenciaDTO, sirve para modificar el registro
+     * @return
+     */
     public KeyListener obtenerKeyListenerSalida(JTextField lecturaTxt, AsistenciaDTO entity) {
         return new KeyListener() {
             @Override
@@ -92,6 +99,12 @@ public class Lector {
         };
     }
 
+     /***
+     * 
+     * @param tarjeta codigo unico del usuario
+     * @param entity un objeto de tipo AsistenciaDTO, sirve para modificar el registro
+     * @throws Exception
+     */
     private void procesarTarjetaSalida(Integer tarjeta, AsistenciaDTO entity) throws Exception{
         // Aquí puedes hacer lo que necesites con la tarjeta, como actualizar la base de datos
         System.out.println("Tarjeta leída: " + tarjeta);

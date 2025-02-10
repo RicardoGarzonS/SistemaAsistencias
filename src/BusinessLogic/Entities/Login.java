@@ -4,7 +4,13 @@ import BusinessLogic.UsuarioBL;
 
 public class Login {
     
-    // sujeto a cambios cunado se implemente en la interfaz grafica
+    /***
+     * 
+     * @param correo es el correo del usaurio, lo usamos debido a que es unico
+     * @param clave clave registrada para el usaurio
+     * @return retorna el id correspondiente al usuario
+     * @throws Exception
+     */
     public int loginCuenta(String correo, String clave) throws Exception {
         UsuarioBL usuarioBL = new UsuarioBL();
         String correoUsuario = usuarioBL.getCorreoUsuario(correo);

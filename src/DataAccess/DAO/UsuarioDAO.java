@@ -44,7 +44,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
                         , rs.getString(9));
                     }
                 } catch (SQLException e) {
-                    throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+                    throw e;
                 }
         return usuario;
     }
@@ -81,7 +81,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
                 usuarios.add(u);
             }
         } catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+            throw e;
         }
         return usuarios;
     }
@@ -102,7 +102,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
             return true;
         } 
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "create()");
+            throw e;
         }
     }
 
@@ -125,7 +125,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
             return true;
     }
     catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "update()");
+            throw e;
         }
         
     }
@@ -142,7 +142,7 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
             return true;
         }
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "delete()");
+            throw e;
         }
         
     }

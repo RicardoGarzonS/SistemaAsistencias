@@ -11,14 +11,6 @@ import BusinessLogic.InscripcionBL;
 // import BusinessLogic.ClaseBL;
 
 public class Estudiante {
-    
-    // public int asistenciasRegistradas (int idMateria) throws Exception {
-    //     ClaseBL claseBL = new ClaseBL();
-    //     int totalClases = claseBL.countDias(idMateria);
-    //     int asistencias = 
-    //     // contar asistencias 
-    //     return 0;
-    // }
 
     /***
      * 
@@ -57,6 +49,12 @@ public class Estudiante {
 
     }
 
+    /***
+     * 
+     * @param idUsuario id del usuario
+     * @return  arreglo del conteo del tipo de asistencias del estudiante
+     * @throws Exception
+     */
     public String [][] totalAsitenciasTipo (Integer idUsuario) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -68,6 +66,12 @@ public class Estudiante {
         return aBl.tablaConteoTipoAsistencias(idUsuario, fechaActual);
     }
 
+    /***
+     * 
+     * @param idUsuario id del usuario
+     * @return arreglo de las asistencias de todas las materias inscritas por el estudiante
+     * @throws Exception
+     */
     public String [][] totalAsistenciasTotalMateriasE (Integer idUsuario) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate now = LocalDate.now();
@@ -78,6 +82,12 @@ public class Estudiante {
         return aBl.tablaAsistenciasTotalMateriasE(idUsuario, fechaActual);
     }
 
+    /***
+     * 
+     * @param idEstudiante id del estudiante
+     * @return arreglo que hace referencia al horario del estudiante
+     * @throws Exception
+     */
     public String [][] getHorarioE (Integer idEstudiante) throws Exception {
         InscripcionBL iBl = new InscripcionBL();
         return iBl.getHorario(idEstudiante);
