@@ -1,4 +1,1 @@
 Esception log:
-[ERROR EN Sistema de Asistencias para el LOG] UserInterface.Form.LogInForm.InicioSesion : database connection closed
-[ERROR EN Sistema de Asistencias para el LOG] UserInterface.Form.LogInForm.InicioSesion : database connection closed
-[ERROR EN Sistema de Asistencias para el LOG] UserInterface.Form.LogInForm.InicioSesion : database connection closed
