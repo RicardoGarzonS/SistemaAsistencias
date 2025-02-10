@@ -1,5 +1,8 @@
 package DataAccess.DAO;
 
+import DataAccess.DTO.MateriaDTO;
+import DataAccess.IDAO;
+import DataAccess.SQLiteDataHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +12,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import DataAccess.IDAO;
-import DataAccess.SQLiteDataHelper;
-import DataAccess.DTO.MateriaDTO;
 
 public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
 
@@ -24,7 +23,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
                      + " ,Estado"
                      + " ,FechaCreacion"
                      + " ,FechaModificacion"
-                     + " FROM Materia WHERE Estado = 'A' AND IdMateria = ?" + id.toString();
+                     + " FROM Materia WHERE Estado = 'A' AND IdMateria = " + id.toString();
 
       try {
              Connection conn = openConnection();

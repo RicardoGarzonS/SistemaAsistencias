@@ -8,6 +8,7 @@ import BusinessLogic.InscripcionBL;
 import BusinessLogic.MateriaBl;
 import BusinessLogic.UsuarioBL;
 import DataAccess.DAO.LectorDAO;
+import DataAccess.DAO.MateriaDAO;
 import DataAccess.DAO.RolDAO;
 import DataAccess.DTO.ClaseDTO;
 import DataAccess.DTO.InscripcionDTO;
@@ -27,6 +28,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,10 +40,14 @@ import javax.swing.border.EmptyBorder;
 
 
 public class AdminForm extends JFrame{
+    final String[] opcionesRol = {"-", "Estudiante", "Profesor", "Admin"};
+    final String[] opcionesDia = {"-", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+    final String[] opcionesLector = {"-", "1"};
+
     private BLFactory<RolDTO>       rBl;
     private BLFactory<LectorDTO>    lBl;
+    private BLFactory<MateriaDTO>   mBl;
     private UsuarioBL               uBl;
-    private MateriaBl               mBl;
     private DiaBL                   dBl;
     private ClaseBL                 cBl;
     private InscripcionBL           iBl;
@@ -72,25 +78,37 @@ public class AdminForm extends JFrame{
 
         rBl = new BLFactory<RolDTO>(RolDAO :: new);
         lBl = new BLFactory<LectorDTO>(LectorDAO :: new);
+        mBl = new BLFactory<MateriaDTO>(MateriaDAO :: new);
         uBl = new UsuarioBL();
-        mBl = new MateriaBl();
         dBl = new DiaBL();
         cBl = new ClaseBL();
         iBl = new InscripcionBL();
 
-        String[] opciones = {"Estudiante", "Profesor", "Admin"};
-        rolComb = new JComboBox(opciones);
-
-        String[] opciones2 = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
-        diaComb = new JComboBox(opciones2);
-
-        String[] opciones3 = {"1"};
-        lectorComb = new JComboBox(opciones3);
+        
+        rolComb = new JComboBox(opcionesRol);
+        diaComb = new JComboBox(opcionesDia);
+        lectorComb = new JComboBox(opcionesLector);
 
         customizeComponent();
 
         // agregarBtn.addActionListener( e -> verAgregarMenu());
-        logoutBtn.addActionListener     ( e -> logout());
+        logoutBtn.addActionListener      ( e -> logout());
+
+        nuevoUserBtn.addActionListener   ( e -> crearUser());
+        borrarUserBtn.addActionListener  ( e -> borrarUser());
+        limpiarUserBtn.addActionListener ( e -> resetUser());
+
+        nuevaMatBtn.addActionListener   ( e -> crearMat());
+        borrarMatBtn.addActionListener  ( e -> borrarMat());
+        limpiarMatBtn.addActionListener ( e -> resetMat());
+
+        nuevaClaseBtn.addActionListener   ( e -> crearClase());
+        borrarClaseBtn.addActionListener  ( e -> borrarClase());
+        limpiarClaseBtn.addActionListener ( e -> resetClase());
+
+        nuevaInscBtn.addActionListener   ( e -> crearInsc());
+        borrarInscBtn.addActionListener  ( e -> borrarInsc());
+        limpiarInscBtn.addActionListener ( e -> resetInsc());
 
         setVisible(true);
     }
@@ -168,6 +186,13 @@ public class AdminForm extends JFrame{
         usuarioPnl.add(correoUsuarioLbl, gbc);
         gbc.gridx = 1;
         usuarioPnl.add(correoUsuarioTxt, gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        usuarioPnl.add(nuevoUserBtn, gbc);
+        gbc.gridy++;
+        usuarioPnl.add(limpiarUserBtn, gbc);
+        gbc.gridy++;
+        usuarioPnl.add(borrarUserBtn, gbc);
 
         materiaPnl.setLayout(new GridBagLayout());
         materiaPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -208,6 +233,13 @@ public class AdminForm extends JFrame{
         gbc.gridy++;
         gbc.gridx = 0;
         materiaPnl.add(new JLabel(" "), gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        materiaPnl.add(nuevaMatBtn, gbc);
+        gbc.gridy++;
+        materiaPnl.add(limpiarMatBtn, gbc);
+        gbc.gridy++;
+        materiaPnl.add(borrarMatBtn, gbc);
 
         clasePnl.setLayout(new GridBagLayout());
         clasePnl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -255,6 +287,13 @@ public class AdminForm extends JFrame{
         gbc.gridy++;
         gbc.gridx = 0;
         clasePnl.add(new JLabel(" "), gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        clasePnl.add(nuevaClaseBtn, gbc);
+        gbc.gridy++;
+        clasePnl.add(limpiarClaseBtn, gbc);
+        gbc.gridy++;
+        clasePnl.add(borrarClaseBtn, gbc);
 
         inscripcionPnl.setLayout(new GridBagLayout());
         inscripcionPnl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -296,6 +335,13 @@ public class AdminForm extends JFrame{
         gbc.gridy++;
         gbc.gridx = 0;
         inscripcionPnl.add(new JLabel(" "), gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        inscripcionPnl.add(nuevaInscBtn, gbc);
+        gbc.gridy++;
+        inscripcionPnl.add(limpiarInscBtn, gbc);
+        gbc.gridy++;
+        inscripcionPnl.add(borrarInscBtn, gbc);
 
         menu.setLayout(new BoxLayout(menu, BoxLayout.X_AXIS));
         menu.add(usuarioPnl);
@@ -369,6 +415,20 @@ public class AdminForm extends JFrame{
                                     diaComb,
                                     lectorComb;
 
+    private JButton                 nuevoUserBtn = new JButton("CREAR"),
+                                    limpiarUserBtn = new JButton("NUEVO"),
+                                    borrarUserBtn = new JButton("BORRAR"),
+                                    nuevaMatBtn = new JButton("CREAR"),
+                                    limpiarMatBtn = new JButton("NUEVO"),
+                                    borrarMatBtn = new JButton("BORRAR"),
+                                    nuevaClaseBtn = new JButton("CREAR"),
+                                    limpiarClaseBtn = new JButton("NUEVO"),
+                                    borrarClaseBtn = new JButton("BORRAR"),
+                                    nuevaInscBtn = new JButton("CREAR"),
+                                    limpiarInscBtn = new JButton("NUEVO"),
+                                    borrarInscBtn = new JButton("BORRAR");
+                                    
+
         private void cargarUsuarios(){
         try {
             List<UsuarioDTO> usuarios = uBl.getAll();
@@ -385,7 +445,12 @@ public class AdminForm extends JFrame{
                 data[index][5] = "***";
                 index++;
             }
-            usuarioTbl = new JTable(data, header);
+            usuarioTbl = new JTable(data, header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             usuarioTbl.setShowHorizontalLines(true);
             usuarioTbl.setGridColor(Style.COLOR_FONT);
             usuarioTbl.setBackground(Style.COLOR_FONT_LIGHT);
@@ -410,7 +475,7 @@ public class AdminForm extends JFrame{
                             inscripcion = null;
                             actualizarTextAreas();
                         } catch (Exception ignored) {
-                            Style.showMsgError("Error de carga, reinicie el programa");
+                            
                         }
                     }
                 }
@@ -431,7 +496,12 @@ public class AdminForm extends JFrame{
                 data[index][1] = mt.getNombre();
                 index++;
             }
-            materiaTbl = new JTable(data, header);
+            materiaTbl = new JTable(data, header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             materiaTbl.setShowHorizontalLines(true);
             materiaTbl.setGridColor(Style.COLOR_FONT);
             materiaTbl.setBackground(Style.COLOR_FONT_LIGHT);
@@ -452,12 +522,12 @@ public class AdminForm extends JFrame{
                     if (row >= 0 && col >= 0) {
                         String strId = materiaTbl.getModel().getValueAt(row, 0).toString();
                         try {
-                            materia     = mBl.getById(Integer.parseInt(strId));
+                            materia     = mBl.getBy(Integer.parseInt(strId));
                             clase       = null;
                             inscripcion = null;
                             actualizarTextAreas();
                         } catch (Exception ignored) {
-                            Style.showMsgError("Error de carga, reinicie el programa");
+                            
                         }
                     }
                 }
@@ -480,7 +550,12 @@ public class AdminForm extends JFrame{
                 data[index][3] = cl.getHoraFin();
                 index++;
             }
-            claseTbl = new JTable(data, header);
+            claseTbl = new JTable(data, header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             claseTbl.setShowHorizontalLines(true);
             claseTbl.setGridColor(Style.COLOR_FONT);
             claseTbl.setBackground(Style.COLOR_FONT_LIGHT);
@@ -502,11 +577,11 @@ public class AdminForm extends JFrame{
                         String strId = claseTbl.getModel().getValueAt(row, 0).toString();
                         try {
                             clase       = cBl.getByIdCliente(Integer.parseInt(strId));
-                            materia     = mBl.getById(Integer.parseInt(clase.getIdMateria())); 
+                            materia     = mBl.getBy(Integer.parseInt(clase.getIdMateria())); 
                             inscripcion = null;
                             actualizarTextAreas();
                         } catch (Exception ignored) {
-                            Style.showMsgError("Error de carga, reinicie el programa");
+                            
                         }
                     }
                 }
@@ -519,16 +594,20 @@ public class AdminForm extends JFrame{
         try {
             List<InscripcionDTO> inscripciones = iBl.getAll();
             inscripcionTblPnl.removeAll();
-            String[] header = {"Id", "Lector", "Aula"};
+            String[] header = {"Id", "Lector"};
             Object[][] data = new Object[inscripciones.size()][3];
             int index = 0;
             for(InscripcionDTO in : inscripciones){
                 data[index][0] = in.getIdInscripcion();
                 data[index][1] = in.getIdLector();
-                data[index][2] = lBl.getBy(Integer.valueOf(in.getIdLector())).getCodigoAula();
                 index++;
             }
-            inscripcionTbl = new JTable(data, header);
+            inscripcionTbl = new JTable(data, header){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             inscripcionTbl.setShowHorizontalLines(true);
             inscripcionTbl.setGridColor(Style.COLOR_FONT);
             inscripcionTbl.setBackground(Style.COLOR_FONT_LIGHT);
@@ -552,10 +631,10 @@ public class AdminForm extends JFrame{
                             inscripcion = iBl.getById(Integer.parseInt(strId));
                             usuario     = uBl.getByIdUsuario(Integer.parseInt(inscripcion.getIdUsuario()));
                             clase       = cBl.getByIdCliente(Integer.parseInt(inscripcion.getIdClase()));
-                            materia     = mBl.getById(Integer.parseInt(clase.getIdMateria()));
+                            materia     = mBl.getBy(Integer.parseInt(clase.getIdMateria()));
                             actualizarTextAreas();
                         } catch (Exception ignored) {
-                            Style.showMsgError("Error de carga, reinicie el programa");
+                            
                         }
                     }
                 }
@@ -567,6 +646,7 @@ public class AdminForm extends JFrame{
     private void actualizarTextAreas(){
         boolean userNull = (usuario == null);
         idUsuarioTxt.setText(userNull ? "" : usuario.getIdUsuario());
+        rolComb.setSelectedIndex(userNull ? 0 : Integer.parseInt(usuario.getIdRol()));
         nombreUsuarioTxt.setText(userNull ? "" : usuario.getNombreUsuario());
         claveUsuarioTxt.setText(userNull ? "" : usuario.getClave());
         cedulaUsuarioTxt.setText(userNull ? "" : usuario.getCedula());
@@ -578,11 +658,115 @@ public class AdminForm extends JFrame{
 
         boolean claseNull = (clase == null);
         idClaseTxt.setText(claseNull ? "" : clase.getIdClase());
+        diaComb.setSelectedIndex(claseNull ? 0 : Integer.parseInt(clase.getIdDia()));
         inicioClaseTxt.setText(claseNull ? "" : clase.getHoraInicio());
         finClaseTxt.setText(claseNull ? "" : clase.getHoraFin());
 
         boolean inscripcionNull = (inscripcion == null);
         idInscripcionTxt.setText(inscripcionNull ? "" : inscripcion.getIdInscripcion());
         yearInscripcionTxt.setText(inscripcionNull ? "" : inscripcion.getAño());
+        lectorComb.setSelectedIndex(userNull ? 0 : Integer.parseInt(inscripcion.getIdLector()));
+    }
+
+    public void crearUser(){
+        if(usuario == null){
+            try {
+                uBl.create(new UsuarioDTO(rolComb.getSelectedIndex() ,nombreUsuarioTxt.getText(), cedulaUsuarioTxt.getText(), claveUsuarioTxt.getText(), correoUsuarioTxt.getText()));
+                customizeComponent();
+            } catch (Exception e) {
+                Style.showMsgError("Error al agregar");
+            }
+        }
+    }
+    public void borrarUser(){
+        if(usuario != null){
+            try {
+                uBl.delete(Integer.parseInt(usuario.getIdUsuario()));
+            } catch (Exception e) {
+                Style.showMsgError("Error al borrar");
+            }
+        }
+    }
+    public void resetUser(){
+        usuario = null;
+        actualizarTextAreas();
+    }
+
+    public void crearMat(){
+        if(materia == null){
+            try {
+                mBl.add(new MateriaDTO(nombreMateriaTxt.getText()));
+                customizeComponent();
+            } catch (Exception e) {
+                Style.showMsgError("Error al agregar");
+            }
+        }else{
+            Style.showMsgError("Insuficientes datos");
+        }
+    }
+    public void borrarMat(){
+        if(materia != null){
+            try {
+                mBl.del(Integer.parseInt(materia.getIdMateria()));
+            } catch (Exception e) {
+                Style.showMsgError("Error al borrar");
+            }
+        }
+    }
+    public void resetMat(){
+        materia = null;
+        actualizarTextAreas();
+    }
+
+    public void crearClase(){
+        if(clase == null && materia != null && diaComb.getSelectedIndex() != 0){
+            try {
+                cBl.create(new ClaseDTO(materia.getIdMateria(), diaComb.getSelectedItem().toString(), inicioClaseTxt.getText(), finClaseTxt.getText()));
+                customizeComponent();
+            } catch (Exception e) {
+                Style.showMsgError("Error al agregar");
+            }
+        }else{
+            Style.showMsgError("Insuficientes datos");
+        }
+    }
+    public void borrarClase(){
+        if(clase != null){
+            try {
+                cBl.delete(Integer.parseInt(clase.getIdClase()));
+            } catch (Exception e) {
+                Style.showMsgError("Error al borrar");
+            }
+        }
+    }
+    public void resetClase(){
+        clase = null;
+        actualizarTextAreas();
+    }
+
+    public void crearInsc(){
+        if(inscripcion == null && clase != null && usuario != null && lectorComb.getSelectedIndex() != 0){
+            try {
+                iBl.registrarInscripcion(new InscripcionDTO(usuario.getIdUsuario(), clase.getIdClase(), lectorComb.getSelectedItem().toString(), yearInscripcionTxt.getText()));
+                customizeComponent();
+            } catch (Exception e) {
+                Style.showMsgError("Error al agregar");
+            }
+        }else{
+            Style.showMsgError("Insuficientes datos");
+        }
+    }
+    public void borrarInsc(){
+        if(inscripcion != null){
+            try {
+                iBl.delete(Integer.parseInt(inscripcion.getIdInscripcion()));
+            } catch (Exception e) {
+                Style.showMsgError("Error al borrar");
+            }
+        }
+    }
+    public void resetInsc(){
+        inscripcion = null;
+        actualizarTextAreas();
     }
 }
