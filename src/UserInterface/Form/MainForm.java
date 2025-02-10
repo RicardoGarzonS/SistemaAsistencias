@@ -32,4 +32,11 @@ public class MainForm {
         af = null;
         tf = new TeacherForm(us, this);
     }
+
+    public void mostrarAdmin(UsuarioDTO us){
+        lg = null;
+        sf = null;
+        tf = null;
+        af = new AdminForm(us, this);
+    }
 }
