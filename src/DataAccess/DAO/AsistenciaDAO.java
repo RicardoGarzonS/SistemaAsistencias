@@ -122,23 +122,22 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
 
     @Override
     public boolean update(AsistenciaDTO entity) throws Exception {
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
        LocalDateTime now = LocalDateTime.now();
+       // Consulta: SET HoraEntrada = ?, HoraSalida = ?, FechaModifica = ? WHERE IdAsistencia = ?
        String query = "UPDATE Asistencia SET HoraEntrada = ?, HoraSalida = ?, FechaModifica = ? WHERE IdAsistencia = ?";
        try {
-            Connection        conn  = openConnection();
+            Connection conn = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setString(2, entity.getHoraEntrada());
-            pstmt.setString(3, entity.getHoraSalida());
-            pstmt.setString(5, formatter.format(now).toString());
-            pstmt.setString(6, entity.getIdAsistencia());
+            pstmt.setString(1, entity.getHoraEntrada());
+            pstmt.setString(2, entity.getHoraSalida());
+            pstmt.setString(3, formatter.format(now));
+            pstmt.setString(4, entity.getIdAsistencia());
             pstmt.executeUpdate();
             return true;
-    }
-    catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "update()");
-        }
+       } catch (SQLException e) {
+            throw e;
+       }
     }
 
     @Override
@@ -322,6 +321,61 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
     } 
     
     
+    public String [][] conteoAsistenciasTotalEYMProfesor (Integer idDocente, String fechaActual) throws Exception{
+        InscripcionBL iBL = new InscripcionBL();
+        MateriaBl mBL = new MateriaBl();
+        int temporal = 0;
+        String [] materias = iBL.getMateriaInscritas(idDocente);
+        String [] materiasSinRepeticion = eliminarRepeticion(materias);
+        Integer [] idMaterias = new Integer [materiasSinRepeticion.length];
+        for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            idMaterias[i] = mBL.getIdMateria(materiasSinRepeticion[i]); // materias profesor
+        }
+        System.out.println(Arrays.toString(materiasSinRepeticion));
+        String fechaInscripcion = iBL.getFechaInscripcion(idDocente, idMaterias[0]);
+        int totalRegistros = contarRegistrosPorIdMaterias(idMaterias);
+        String [][] asistencias = new String [totalRegistros][5];
+        String query = "SELECT a.IdAsistencia, a.Fecha, a.HoraEntrada, m.Nombre, u.NombreUsuario" + 
+                        " FROM Asistencia a " +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                        " JOIN Clase c ON i.IdClase = c.IdClase" +
+                        " JOIN Materia m on c.IdMateria = m.IdMateria " +
+                        " JOIN Usuario u ON i.IdUsuario = u.IdUsuario"+
+                        " WHERE u.IdRol = 1" +
+                        " AND m.IdMateria = ";
+
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            for (int i =0; i<materiasSinRepeticion.length; i++){
+                ResultSet rs = stmt.executeQuery(query + idMaterias[i]);
+                Integer [] idEstMateriaI = iBL.getIdEstudiantesPorMateriaRolE(idMaterias[i]);
+                for (int j=0; j<idEstMateriaI.length;j++){
+                    int totalRegistrosMateria = contarRegistrosidMateria(idEstMateriaI[j], idMaterias[i], fechaActual, fechaInscripcion);
+                    String horaInicio = iBL.getHoraInicioPorMateria(idEstMateriaI[j], idMaterias[i]);
+                    String horaFin = iBL.getHoraFinPorMateria(idEstMateriaI[j], idMaterias[i]);
+                    
+                    for (int m = temporal; m<totalRegistrosMateria + temporal; m++){
+                        if (rs.next()){
+                            int idAsistencia = rs.getInt("IdAsistencia");
+                            asistencias[m][0] = rs.getString("Fecha");
+                            asistencias[m][1] = rs.getString("HoraEntrada");
+                            asistencias[m][2] = rs.getString("Nombre");
+                            asistencias[m][3] = rs.getString("NombreUsuario");
+                            asistencias[m][4] = determinarTipoAsistencias(horaInicio, horaFin, idAsistencia);
+                        }
+                    }
+                    temporal += totalRegistrosMateria;
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        return asistencias;
+    }
+
     public String [][] tablaAsistenciasTotalMateriasE (int idEstudiante, String fechaActual) throws Exception{
         InscripcionBL iBL = new InscripcionBL();
         MateriaBl mBl = new MateriaBl();
@@ -329,8 +383,6 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         String [] materias = iBL.getMateriaInscritas(idEstudiante);
         String [] materiasSinRepeticion = eliminarRepeticion(materias);
         Integer [] idMaterias = new Integer [materiasSinRepeticion.length];
-        String [] horaInicio = iBL.getHoraInicioTotalMaterias(idEstudiante);
-        String [] horaFin = iBL.getHoraFinTotalMaterias(idEstudiante);
         String fechaInscripcion = iBL.getFechaInscripcion(idEstudiante, mBl.getIdMateria(materias[0]));
         for (int i = 0; i < materiasSinRepeticion.length; i++) {
             idMaterias[i] = mBl.getIdMateria(materiasSinRepeticion[i]);
@@ -350,6 +402,8 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
             for (int i = 0; i < materiasSinRepeticion.length; i++) {
                 ResultSet rs = stmt.executeQuery(query + idMaterias[i]);
                 int totalRegistrosMateria = contarRegistrosidMateria(idEstudiante, idMaterias[i], fechaActual, fechaInscripcion);
+                String horaInicio = iBL.getHoraInicioPorMateria(idEstudiante, idMaterias[i]);
+                String horaFin = iBL.getHoraFinPorMateria(idEstudiante, idMaterias[i]);
 
                 for (int j = temporal; j<totalRegistrosMateria + temporal; j++){
                     if (rs.next()) {
@@ -358,7 +412,7 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
                         asistencias[j][1] = rs.getString("HoraEntrada");
                         asistencias[j][2] = rs.getString("HoraSalida");
                         asistencias[j][3] = rs.getString("Nombre");
-                        asistencias[j][4] = determinarTipoAsistencias(horaInicio[i], horaFin[1], idAsistencia);
+                        asistencias[j][4] = determinarTipoAsistencias(horaInicio, horaFin, idAsistencia);
                     }
                 }
                 temporal += totalRegistrosMateria;
@@ -369,28 +423,165 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         return asistencias;
     }
 
-    public String [][] tablaConteoTipoAsistencias (int idEstudiante, String fechaActual) throws Exception {
+    public String [][] tablaAsistenciasTotalMateriasD (int idEstudiante, String fechaActual) throws Exception{
         InscripcionBL iBL = new InscripcionBL();
-
-        String [][] tablaAsistencias = tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
+        MateriaBl mBl = new MateriaBl();
+        int temporal = 0;
         String [] materias = iBL.getMateriaInscritas(idEstudiante);
         String [] materiasSinRepeticion = eliminarRepeticion(materias);
-        int totalAsistencias = 0;
-        int totalAtrasos = 0;
-        int totalFaltas = 0;
+        Integer [] idMaterias = new Integer [materiasSinRepeticion.length];
+        String fechaInscripcion = iBL.getFechaInscripcion(idEstudiante, mBl.getIdMateria(materias[0]));
+        for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            idMaterias[i] = mBl.getIdMateria(materiasSinRepeticion[i]);
+        }
+        int totalRegistros = contarRegistrosTotalMaterias(idEstudiante, idMaterias, fechaActual, fechaInscripcion);
+        String [][] asistencias = new String [totalRegistros][5];
+        String query = "SELECT a.IdAsistencia,a.Fecha, a.HoraEntrada, a.HoraSalida, m.Nombre" + 
+                        " FROM Asistencia a " +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                        " JOIN Clase c ON i.IdClase = c.IdClase" +
+                        " JOIN Usuario u ON i.IdUsuario = u.IdUsuario" +
+                        " JOIN Materia m on c.IdMateria = m.IdMateria " +
+                        " WHERE i.IdUsuario = " + idEstudiante +
+                        " AND u.IdRol = 2" +
+                        " AND m.IdMateria = ";
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            for (int i = 0; i < materiasSinRepeticion.length; i++) {
+                ResultSet rs = stmt.executeQuery(query + idMaterias[i]);
+                int totalRegistrosMateria = contarRegistrosidMateria(idEstudiante, idMaterias[i], fechaActual, fechaInscripcion);
+                String horaInicio = iBL.getHoraInicioPorMateria(idEstudiante, idMaterias[i]);
+                String horaFin = iBL.getHoraFinPorMateria(idEstudiante, idMaterias[i]);
 
-        String [][] asistenciasTipo = new String [materiasSinRepeticion.length][4];
-        for (int i=0; i<tablaAsistencias.length; i++){
-            if (tablaAsistencias[i][4].equals("2")){
-                totalAsistencias++;
-            } else if (tablaAsistencias[i][4].equals("1")){
-                totalAtrasos++;
-            } else if (tablaAsistencias[i][4].equals("0")){
-                totalAsistencias++;
+                for (int j = temporal; j<totalRegistrosMateria + temporal; j++){
+                    if (rs.next()) {
+                        int idAsistencia = rs.getInt("IdAsistencia");
+                        asistencias[j][0] = rs.getString("Fecha");
+                        asistencias[j][1] = rs.getString("HoraEntrada");
+                        asistencias[j][2] = rs.getString("HoraSalida");
+                        asistencias[j][3] = rs.getString("Nombre");
+                        asistencias[j][4] = determinarTipoAsistencias(horaInicio, horaFin, idAsistencia);
+                    }
+                }
+                temporal += totalRegistrosMateria;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return asistencias;
+    }
+
+    public String [][] tablaConteoTipoAsistenciasDME (int idDocente, String fechaActual) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+        MateriaBl mBL = new MateriaBl();
+        String [][] tablaAsistencias = conteoAsistenciasTotalEYMProfesor(idDocente, fechaActual);
+        String [] materias = iBL.getMateriaInscritas(idDocente);
+        String [] materiasSinRepeticion = eliminarRepeticion(materias);
+        Integer [] idMaterias = new Integer[materiasSinRepeticion.length];
+        for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            idMaterias[i] = mBL.getIdMateria(materiasSinRepeticion[i]);
+        }
+        Integer [] idEstudiantes = iBL.getIdEstudiantesPorMateriaRolE(idMaterias[0]);
+        
+        for (int i=0; i<materiasSinRepeticion.length; i++){
+            Integer [] idCambio = iBL.getIdEstudiantesPorMateriaRolE(idMaterias[i]);
+            if (idEstudiantes.length < idCambio.length){
+                idEstudiantes = idCambio;
             }
         }
 
+        String [][] asistenciasTipo = new String[idMaterias.length * idEstudiantes.length][5];
+
+        for (int i  = 0; i<materiasSinRepeticion.length; i++){
+            int totalAsistencias = 0;
+            int totalAtrasos = 0;
+            int totalFaltas = 0;
+            Integer [] idEstMateriaI = iBL.getIdEstudiantesPorMateriaRolE(idMaterias[i]);
+
+            for (int j = 0; j<idEstMateriaI.length; j++){
+                int totalRegistrosMateria = contarRegistrosidMateria(idEstMateriaI[j], idMaterias[i], fechaActual, iBL.getFechaInscripcion(idEstMateriaI[j], idMaterias[i]));
+                
+                for (int m = 0; m<totalRegistrosMateria; m++){
+                    if (tablaAsistencias[m][4].equals("2")){
+                        totalAsistencias++;
+                    } else if (tablaAsistencias[m][4].equals("1")){
+                        totalAtrasos++;
+                    } else if (tablaAsistencias[m][4].equals("0")){
+                        totalFaltas++;
+                    }
+                }
+                asistenciasTipo[j][0] = tablaAsistencias[j][2];
+                asistenciasTipo[j][1] = tablaAsistencias[j][3];
+                asistenciasTipo[j][2] = String.valueOf(totalAsistencias);
+                asistenciasTipo[j][3] = String.valueOf(totalAtrasos);
+                asistenciasTipo[j][4] = String.valueOf(totalFaltas);
+            }
+
+        }
+
+        return asistenciasTipo;
+    }
+
+    public String[][] tablaConteoTipoAsistenciasE (int idEstudiante, String fechaActual) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+        String[][] tablaAsistencias = tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
+        String[] materias = iBL.getMateriaInscritas(idEstudiante);
+        String[] materiasSinRepeticion = eliminarRepeticion(materias);
+
+        String[][] asistenciasTipo = new String[materiasSinRepeticion.length][4];
+
         for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            int totalAsistencias = 0;
+            int totalAtrasos = 0;
+            int totalFaltas = 0;
+
+            for (int j = 0; j < tablaAsistencias.length; j++) {
+                if (tablaAsistencias[j][3].equals(materiasSinRepeticion[i])) {
+                    if (tablaAsistencias[j][4].equals("2")) {
+                        totalAsistencias++;
+                    } else if (tablaAsistencias[j][4].equals("1")) {
+                        totalAtrasos++;
+                    } else if (tablaAsistencias[j][4].equals("0")) {
+                        totalFaltas++;
+                    }
+                }
+            }
+            
+            asistenciasTipo[i][0] = materiasSinRepeticion[i];
+            asistenciasTipo[i][1] = String.valueOf(totalAsistencias);
+            asistenciasTipo[i][2] = String.valueOf(totalAtrasos);
+            asistenciasTipo[i][3] = String.valueOf(totalFaltas);
+        }
+
+        return asistenciasTipo;
+    }
+
+    public String[][] tablaConteoTipoAsistenciasD (int idDocente, String fechaActual) throws Exception {
+        InscripcionBL iBL = new InscripcionBL();
+        String[][] tablaAsistencias = tablaAsistenciasTotalMateriasE(idDocente, fechaActual);
+        String[] materias = iBL.getMateriaInscritas(idDocente);
+        String[] materiasSinRepeticion = eliminarRepeticion(materias);
+
+        String[][] asistenciasTipo = new String[materiasSinRepeticion.length][4];
+
+        for (int i = 0; i < materiasSinRepeticion.length; i++) {
+            int totalAsistencias = 0;
+            int totalAtrasos = 0;
+            int totalFaltas = 0;
+
+            for (int j = 0; j < tablaAsistencias.length; j++) {
+                if (tablaAsistencias[j][3].equals(materiasSinRepeticion[i])) {
+                    if (tablaAsistencias[j][4].equals("2")) {
+                        totalAsistencias++;
+                    } else if (tablaAsistencias[j][4].equals("1")) {
+                        totalAtrasos++;
+                    } else if (tablaAsistencias[j][4].equals("0")) {
+                        totalFaltas++;
+                    }
+                }
+            }
+            
             asistenciasTipo[i][0] = materiasSinRepeticion[i];
             asistenciasTipo[i][1] = String.valueOf(totalAsistencias);
             asistenciasTipo[i][2] = String.valueOf(totalAtrasos);
@@ -499,5 +690,29 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
         // Convertir el set de vuelta a un arreglo
         return set.toArray(new String[0]);
     }
- 
+
+    public int contarRegistrosPorIdMaterias(Integer [] idMaterias) throws Exception {
+        int totalRegistros = 0;
+        String query = "SELECT COUNT(*) AS TotalReg" + 
+                        " FROM Asistencia a " +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion " +
+                        " JOIN Clase c ON i.IdClase = c.IdClase" +
+                        " JOIN Materia m on c.IdMateria = m.IdMateria " +
+                        " JOIN Usuario u ON i.IdUsuario = u.IdUsuario"+
+                        " WHERE u.IdRol = 1" +
+                        " AND m.IdMateria = ";
+        try {
+            Connection conn = openConnection();
+            Statement stmt = conn.createStatement();
+            for (int i=0; i<idMaterias.length; i++){
+                ResultSet rs = stmt.executeQuery(query + idMaterias[i]);
+                if (rs.next()) {
+                    totalRegistros += rs.getInt("TotalReg");
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return totalRegistros;
+    }
 }

@@ -263,44 +263,117 @@ public class InscripcionDAO extends SQLiteDataHelper implements IDAO<Inscripcion
         return correos.toArray(new String[0]);
     }
 
-    public String [] getHoraInicioTotalMaterias (Integer idEstudiante) throws Exception {
-        List<String> horasInicio = new ArrayList<>();
+
+    public String getHoraInicioPorMateria (Integer idEstudainte, Integer idMateria) throws Exception {
+        String horaInicio = null;
         String query = "SELECT c.HoraInicio FROM Clase c " + 
                        "JOIN Inscripcion i ON c.IDClase = i.IDClase " +
-                       "WHERE i.IDUsuario = ?";
+                       "WHERE i.IDUsuario = ? AND c.IDMateria = ?";
         try {
             Connection conn = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, idEstudiante);
+            pstmt.setInt(1, idEstudainte);
+            pstmt.setInt(2, idMateria);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                horasInicio.add(rs.getString(1));
+            if (rs.next()) {
+                horaInicio = rs.getString(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return horasInicio.toArray(new String[0]);
+        return horaInicio;
     }
 
-    public String [] getHoraFinTotalMaterias (Integer idEstudiante) throws Exception {
-        List<String> horasInicio = new ArrayList<>();
+    public String getHoraFinPorMateria (Integer idEstudiante, Integer idMateria) throws Exception {
+        String horaFin = null;
         String query = "SELECT c.HoraFin FROM Clase c " + 
                        "JOIN Inscripcion i ON c.IDClase = i.IDClase " +
-                       "WHERE i.IDUsuario = ?";
+                       "WHERE i.IDUsuario = ? AND c.IDMateria = ?";
         try {
             Connection conn = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, idEstudiante);
+            pstmt.setInt(2, idMateria);
             ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                horasInicio.add(rs.getString(1));
+            if (rs.next()) {
+                horaFin = rs.getString(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return horasInicio.toArray(new String[0]);
+        return horaFin;
     }
 
+    public Integer [] getIdEstudiantesPorMateriaRolE (Integer idMateria) throws Exception {
+        List<Integer> idEstudiantes = new ArrayList<>();
+        String query = "SELECT i.IdUsuario FROM Inscripcion i " + 
+                       "JOIN Clase c ON i.IDClase = c.IDClase " +
+                       "JOIN Usuario u ON i.IdUsuario = u.IDUsuario " +
+                       "WHERE u.IdRol = 1 AND c.IDMateria = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idMateria);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                idEstudiantes.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return idEstudiantes.toArray(new Integer[0]);
+    }
 
+    public String[][] getHorarioById(Integer idUsuario) throws Exception {
+        String [][] horario = new String[6][6];
+        String [] horasIniciales = {"07:00", "09:00", "11:00", "14:00", "16:00", "18:00"};
+        String [] horasFinales = {"09:00", "11:00", "13:00", "16:00", "18:00", "20:00"};
+        String [] dias = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
+
+        String query = " SELECT c.HoraInicio, d.Nombre, m.Nombre FROM Inscripcion i " + 
+                       " JOIN Clase c ON i.IdClase = c.IDClase " + 
+                       " JOIN Dia D ON c.IdDia = D.IdDia " + 
+                       " JOIN Materia M ON c.IdMateria = M.IdMateria " + 
+                       " WHERE I.IDUsuario = " + idUsuario.toString() +
+                       " AND d.Nombre = ?" +
+                       " AND c.HoraInicio = ?";
+
+        try {
+            Connection conn = openConnection();
+            for (int m = 0; m<horasIniciales.length;m++){
+                horario[m][0] = horasIniciales[m] + " - " +horasFinales[m];
+            }
+            for (int i=0; i<dias.length;i++){
+                for (int j=0; j<horasIniciales.length;j++){
+                    PreparedStatement pstmt = conn.prepareStatement(query);
+                    pstmt.setString(1, dias[i]);
+                    pstmt.setString(2, horasIniciales[j]);
+                    ResultSet rs = pstmt.executeQuery();
+                    if (rs.next()) {
+                        if (j == 0){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==1){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==2){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==3){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==4){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==5){
+                            horario[j][i+1] = rs.getString(3);
+                        } else if (j==6){
+                            horario[j][i+1] = rs.getString(3);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+
+        return horario;
+                       
+    }
     
 }

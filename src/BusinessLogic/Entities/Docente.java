@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import BusinessLogic.AsistenciaBL;
+import BusinessLogic.InscripcionBL;
 
 public class Docente {
     /***
@@ -37,6 +38,53 @@ public class Docente {
         AsistenciaBL aBl = new AsistenciaBL();
         System.out.println(Arrays.toString(aBl.contarAsistenciasEstudiantesPorMateria(nombreMateria, fechaActual)));
         return aBl.contarAsistenciasEstudiantesPorMateria(nombreMateria, fechaActual);
+    }
+
+    public String [][] tablaConteoAsistenciasTotalEYMProfesor (Integer idDocente) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        System.out.println(Arrays.toString(aBl.tablaConteoAsistenciasTotalEYMProfesor(idDocente, fechaActual)));
+        return aBl.tablaConteoAsistenciasTotalEYMProfesor(idDocente, fechaActual);
+    }
+
+    public String [][] tablaConteoTipoAsistenciasDME (Integer idDocente) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        System.out.println(Arrays.toString(aBl.tablaConteoTipoAsistenciasDME(idDocente, fechaActual)));
+        return aBl.tablaConteoTipoAsistenciasDME(idDocente, fechaActual);
+    }
+
+    public String [][] totalAsistenciasTotalMateriasD (Integer idDocente) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        return aBl.tablaAsistenciasTotalMateriasD(idDocente, fechaActual);
+    }
+
+    public String [][] totalAsistenciasTipoD (Integer idDocente) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        return aBl.tablaConteoTipoAsistenciasD(idDocente, fechaActual);
+    }
+
+    public String [][] tablaHorarioD (Integer idDocente) throws Exception {
+        InscripcionBL iBl = new InscripcionBL();
+        return iBl.getHorario(idDocente);
     }
 
 }

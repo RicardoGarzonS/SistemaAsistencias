@@ -213,6 +213,11 @@ public class TeacherForm extends JFrame{
         /*
          * Aqui va el metodo para poner el horario en Object [][] data
          */
+        try {
+            data = docente.tablaHorarioD(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         horario = new JTable(data, header);
         horario.setShowHorizontalLines(true);
         horario.setGridColor(Style.COLOR_FONT);
@@ -228,11 +233,16 @@ public class TeacherForm extends JFrame{
     }
     private void crearHistorico(){
         historicoPnl.removeAll();
-        String[] header = {"Fecha", "Hora", "Materia", "Asistencia"};
-        Object[][] data = new Object[12][4];
+        String[] header = {"Fecha", "Hora Inicio", "Hora Final", "Materia", "Asistencia"};
+        Object[][] data = new Object[100][5];
         /*
          * Aqui va el metodo para poner todas las asistencias (Ausente 0, Atrasado 1, Presente 2) del usuario en Object [][] data
          */
+        try {
+            data = docente.totalAsistenciasTotalMateriasD(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         historico = new JTable(data, header);
         historico.setShowHorizontalLines(true);
         historico.setGridColor(Style.COLOR_FONT);
@@ -251,6 +261,11 @@ public class TeacherForm extends JFrame{
         /*
          * Aqui va el metodo para poner el total de asistencias, atrasos e inasistencias del usuario en Object [][] data
          */
+        try {
+            data = docente.totalAsistenciasTipoD(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         resumen = new JTable(data, header);
         resumen.setShowHorizontalLines(true);
         resumen.setGridColor(Style.COLOR_FONT);
@@ -262,13 +277,20 @@ public class TeacherForm extends JFrame{
 
         resumenPnl.add(new JScrollPane(resumen));
     }
+
     private void crearEstudiantes(){
         estudiantesPnl.removeAll();
         String[] header = {"Fecha", "Hora", "Materia", "Estudiante", "Asistencia"};
         Object[][] data = new Object[12][5];
         /*
          * Aqui va el metodo para poner todas las asistencias (Ausente 0, Atrasado 1, Presente 2) de los estudiantes en Object [][] data
-         */
+         */ 
+        try {
+            data = docente.tablaConteoAsistenciasTotalEYMProfesor(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // crear metodo en Docente para obtener las asistencias de los estudiantes, deben ser todos los estudiantes y todas las materias del profesor 
         estudiantes = new JTable(data, header);
         estudiantes.setShowHorizontalLines(true);
         estudiantes.setGridColor(Style.COLOR_FONT);
@@ -287,6 +309,12 @@ public class TeacherForm extends JFrame{
         /*
          * Aqui va el metodo para poner el total de asistencias, atrasos e inasistencias de los estudiantes en Object [][] data
          */
+        // metodo en Docente para obtener el resumen de los estudiantes, es decir para cada estudiante y cada materia el conteo de asistencias, atrasos e inasistencias
+        try {
+            data = docente.tablaConteoTipoAsistenciasDME(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         resumenEst = new JTable(data, header);
         resumenEst.setShowHorizontalLines(true);
         resumenEst.setGridColor(Style.COLOR_FONT);

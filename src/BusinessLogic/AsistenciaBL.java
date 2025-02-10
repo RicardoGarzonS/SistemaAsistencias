@@ -54,8 +54,24 @@ public class AsistenciaBL {
         return aDAO.tablaAsistenciasTotalMateriasE(idEstudiante, fechaActual);
     }
 
+    public String [][] tablaAsistenciasTotalMateriasD (int idDocente, String fechaActual) throws Exception {
+        return aDAO.tablaAsistenciasTotalMateriasD(idDocente, fechaActual);
+    }
+
     public String [][] tablaConteoTipoAsistencias (int idEstudiante, String fechaActual) throws Exception {
-        return aDAO.tablaConteoTipoAsistencias(idEstudiante, fechaActual);
+        return aDAO.tablaConteoTipoAsistenciasE(idEstudiante, fechaActual);
+    }
+
+    public String [][] tablaConteoTipoAsistenciasD (int idDocente, String fechaActual) throws Exception {
+        return aDAO.tablaConteoTipoAsistenciasD(idDocente, fechaActual);
+    }
+
+    public String [][] tablaConteoAsistenciasTotalEYMProfesor (Integer idDocente, String fechaActual) throws Exception {
+        return aDAO.conteoAsistenciasTotalEYMProfesor(idDocente, fechaActual);
+    }
+
+    public String [][] tablaConteoTipoAsistenciasDME (int idDocente, String fechaActual) throws Exception {
+        return aDAO.tablaConteoTipoAsistenciasDME(idDocente, fechaActual);
     }
     
 }

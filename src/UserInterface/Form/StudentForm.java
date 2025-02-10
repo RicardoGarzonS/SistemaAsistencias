@@ -155,10 +155,15 @@ public class StudentForm extends JFrame{
     private void crearHorario(){
         horarioPnl.removeAll();
         String[] header = {"Hora", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes"};
-        Object[][] data = new Object[6][6];
+        Object[][] data = new Object[7][6];
         /*
          * Aqui va el metodo para poner el horario en Object [][] data
          */
+        try {
+            data = estudiante.getHorarioE(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         horario = new JTable(data, header);
         horario.setShowHorizontalLines(true);
         horario.setGridColor(Style.COLOR_FONT);
@@ -174,11 +179,16 @@ public class StudentForm extends JFrame{
     }
     private void crearHistorico(){
         historicoPnl.removeAll();
-        String[] header = {"Fecha", "Hora", "Materia", "Asistencia"};
-        Object[][] data = new Object[12][4];
+        String[] header = {"Fecha", "Hora Inicio", "Hora Final", "Materia", "Asistencia"};
+        Object[][] data = new Object[100][5];
         /*
          * Aqui va el metodo para poner todas las asistencias (Ausente 0, Atrasado 1, Presente 2) del usuario en Object [][] data
          */
+        try {
+            data = estudiante.totalAsistenciasTotalMateriasE(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         historico = new JTable(data, header);
         historico.setShowHorizontalLines(true);
         historico.setGridColor(Style.COLOR_FONT);
@@ -197,6 +207,11 @@ public class StudentForm extends JFrame{
         /*
          * Aqui va el metodo para poner el total de asistencias, atrasos e inasistencias del usuario en Object [][] data
          */
+        try {
+            data = estudiante.totalAsitenciasTipo(Integer.parseInt(usuario.getIdUsuario()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         resumen = new JTable(data, header);
         resumen.setShowHorizontalLines(true);
         resumen.setGridColor(Style.COLOR_FONT);

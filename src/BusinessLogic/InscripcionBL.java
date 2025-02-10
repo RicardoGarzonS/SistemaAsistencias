@@ -138,12 +138,20 @@ public class InscripcionBL extends SQLiteDataHelper {
         return iDAO.getCorreoEstudiantesPorMateria(idMateria);
     }
 
-    public String [] getHoraInicioTotalMaterias (int idEstudiante) throws Exception {
-        return iDAO.getHoraInicioTotalMaterias(idEstudiante);
+    public String getHoraInicioPorMateria (int idEstudiante, int idMateria) throws Exception {
+        return iDAO.getHoraInicioPorMateria(idEstudiante, idMateria);
     }
 
-    public String [] getHoraFinTotalMaterias (int idEstudiante) throws Exception {
-        return iDAO.getHoraFinTotalMaterias(idEstudiante);
+    public String getHoraFinPorMateria (Integer idEstudiante, Integer idMateria) throws Exception {
+        return iDAO.getHoraFinPorMateria(idEstudiante, idMateria);
+    }
+
+    public Integer [] getIdEstudiantesPorMateriaRolE (int idEstudiante) throws Exception {
+        return iDAO.getIdEstudiantesPorMateriaRolE(idEstudiante);
+    }
+
+    public String [][] getHorario (Integer idUsuario) throws Exception {
+        return iDAO.getHorarioById(idUsuario);
     }
 
 

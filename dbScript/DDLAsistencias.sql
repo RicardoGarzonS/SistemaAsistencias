@@ -107,6 +107,22 @@ CREATE TABLE Asistencia (
     ,FechaModificacion      DATE NOT NULL DEFAULT (DATE('now', 'localtime'))
 );
 
-SELECT HoraEntrada, HoraSalida 
-                       FROM Asistencia 
-                       WHERE IdAsistencia = 4
+SELECT a.IdAsistencia, a.Fecha, a.HoraEntrada, m.Nombre, u.NombreUsuario, u.IdUsuario  
+                         FROM Asistencia a  
+                         JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion  
+                         JOIN Clase c ON i.IdClase = c.IdClase 
+                         JOIN Materia m on c.IdMateria = m.IdMateria  
+                         JOIN Usuario u ON i.IdUsuario = u.IdUsuario
+                         WHERE u.IdRol = 1 
+                         AND m.IdMateria = 2;
+
+
+ SELECT c.HoraInicio, d.Nombre, m.Nombre FROM Inscripcion i  
+                        JOIN Clase c ON i.IdClase = c.IDClase  
+                        JOIN Dia D ON c.IdDia = D.IdDia  
+                        JOIN Materia M ON c.IdMateria = M.IdMateria  
+                        WHERE I.IDUsuario =  1
+                        AND d.Nombre = 'Lunes'
+                        AND c.HoraInicio = '07:00';
+
+                         

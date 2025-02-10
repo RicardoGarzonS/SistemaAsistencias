@@ -25,6 +25,10 @@ public class UsuarioBL {
     public String getCorreoUsuario(String correoUsuario) throws Exception {
         return uDAO.getCorreo(correoUsuario);
     }
+    
+    public String getNombreUsuario(int idEstudiante) throws Exception {
+        return uDAO.getNombreUsuario(idEstudiante);
+    }
 
     public String getClaveUsuario(String nombreUsuario) throws Exception {
         return uDAO.getClaveUsuario(nombreUsuario);

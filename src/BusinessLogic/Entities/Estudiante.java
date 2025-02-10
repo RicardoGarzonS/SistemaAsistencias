@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 import BusinessLogic.AsistenciaBL;
+import BusinessLogic.InscripcionBL;
 
 // import BusinessLogic.ClaseBL;
 
@@ -54,6 +55,32 @@ public class Estudiante {
         System.out.println(Arrays.toString(aBl.contarAsistenciasTotalMaterias(idUsuario, fechaActual)));
         return aBl.contarAsistenciasTotalMaterias(idUsuario, fechaActual);
 
+    }
+
+    public String [][] totalAsitenciasTipo (Integer idUsuario) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+
+        AsistenciaBL aBl = new AsistenciaBL();
+        System.out.println(Arrays.deepToString(aBl.tablaConteoTipoAsistencias(idUsuario, fechaActual)));
+        return aBl.tablaConteoTipoAsistencias(idUsuario, fechaActual);
+    }
+
+    public String [][] totalAsistenciasTotalMateriasE (Integer idUsuario) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        LocalDate now = LocalDate.now();
+
+        String fechaActual = dateFormat.format(java.sql.Date.valueOf(now)).replace("/", "-");
+        
+        AsistenciaBL aBl = new AsistenciaBL();
+        return aBl.tablaAsistenciasTotalMateriasE(idUsuario, fechaActual);
+    }
+
+    public String [][] getHorarioE (Integer idEstudiante) throws Exception {
+        InscripcionBL iBl = new InscripcionBL();
+        return iBl.getHorario(idEstudiante);
     }
 
 }
