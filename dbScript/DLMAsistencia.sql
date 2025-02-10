@@ -633,3 +633,6 @@ INSERT INTO Asistencia (IdInscripcion, Fecha, HoraEntrada, HoraSalida) VALUES
 ,(53, '2024/03/08', '16:00', '18:00')  -- Asiste el 8 de marzo
 ,(53, '2024/03/15', '16:00', '18:00')  -- Asiste el 15 de marzo
 ,(53, '2024/03/22', '00:00', '00:00');       -- Falta el 22 de marzo
+
+DELETE FROM Clase
+WHERE IdClase = 15;

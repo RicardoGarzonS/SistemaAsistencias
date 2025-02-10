@@ -286,9 +286,6 @@ public class AdminForm extends JFrame{
         clasePnl.add(new JLabel(" "), gbc);
         gbc.gridy++;
         gbc.gridx = 0;
-        clasePnl.add(new JLabel(" "), gbc);
-        gbc.gridy++;
-        gbc.gridx = 0;
         clasePnl.add(nuevaClaseBtn, gbc);
         gbc.gridy++;
         clasePnl.add(limpiarClaseBtn, gbc);
@@ -319,11 +316,6 @@ public class AdminForm extends JFrame{
         inscripcionPnl.add(idInscripcionTxt, gbc);
         gbc.gridy++;
         gbc.gridx = 0;
-        inscripcionPnl.add(idDiaLbl, gbc);
-        gbc.gridx = 1;
-        inscripcionPnl.add(diaComb, gbc);
-        gbc.gridy++;
-        gbc.gridx = 0;
         inscripcionPnl.add(yearInscripcionLbl, gbc);
         gbc.gridx = 1;
         inscripcionPnl.add(yearInscripcionTxt, gbc);
@@ -332,6 +324,9 @@ public class AdminForm extends JFrame{
         inscripcionPnl.add(idLectorLbl, gbc);
         gbc.gridx = 1;
         inscripcionPnl.add(lectorComb, gbc);
+        gbc.gridy++;
+        gbc.gridx = 0;
+        inscripcionPnl.add(new JLabel(" "), gbc);
         gbc.gridy++;
         gbc.gridx = 0;
         inscripcionPnl.add(new JLabel(" "), gbc);
@@ -682,6 +677,7 @@ public class AdminForm extends JFrame{
         if(usuario != null){
             try {
                 uBl.delete(Integer.parseInt(usuario.getIdUsuario()));
+                customizeComponent();
             } catch (Exception e) {
                 Style.showMsgError("Error al borrar");
             }
@@ -698,6 +694,7 @@ public class AdminForm extends JFrame{
                 mBl.add(new MateriaDTO(nombreMateriaTxt.getText()));
                 customizeComponent();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 Style.showMsgError("Error al agregar");
             }
         }else{
@@ -708,6 +705,7 @@ public class AdminForm extends JFrame{
         if(materia != null){
             try {
                 mBl.del(Integer.parseInt(materia.getIdMateria()));
+                customizeComponent();
             } catch (Exception e) {
                 Style.showMsgError("Error al borrar");
             }
@@ -721,9 +719,11 @@ public class AdminForm extends JFrame{
     public void crearClase(){
         if(clase == null && materia != null && diaComb.getSelectedIndex() != 0){
             try {
-                cBl.create(new ClaseDTO(materia.getIdMateria(), diaComb.getSelectedItem().toString(), inicioClaseTxt.getText(), finClaseTxt.getText()));
+                Integer day = diaComb.getSelectedIndex();
+                cBl.create(new ClaseDTO(materia.getIdMateria(), day.toString(), inicioClaseTxt.getText(), finClaseTxt.getText()));
                 customizeComponent();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 Style.showMsgError("Error al agregar");
             }
         }else{
@@ -734,6 +734,7 @@ public class AdminForm extends JFrame{
         if(clase != null){
             try {
                 cBl.delete(Integer.parseInt(clase.getIdClase()));
+                customizeComponent();
             } catch (Exception e) {
                 Style.showMsgError("Error al borrar");
             }
@@ -747,9 +748,11 @@ public class AdminForm extends JFrame{
     public void crearInsc(){
         if(inscripcion == null && clase != null && usuario != null && lectorComb.getSelectedIndex() != 0){
             try {
-                iBl.registrarInscripcion(new InscripcionDTO(usuario.getIdUsuario(), clase.getIdClase(), lectorComb.getSelectedItem().toString(), yearInscripcionTxt.getText()));
+                Integer reader = lectorComb.getSelectedIndex();
+                iBl.registrarInscripcion(new InscripcionDTO(usuario.getIdUsuario(), clase.getIdClase(), reader.toString(), yearInscripcionTxt.getText()));
                 customizeComponent();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 Style.showMsgError("Error al agregar");
             }
         }else{
@@ -760,6 +763,7 @@ public class AdminForm extends JFrame{
         if(inscripcion != null){
             try {
                 iBl.delete(Integer.parseInt(inscripcion.getIdInscripcion()));
+                customizeComponent();
             } catch (Exception e) {
                 Style.showMsgError("Error al borrar");
             }

@@ -77,7 +77,7 @@ public class UsuarioBL {
             throw new Exception("¡El objeto UsuarioDTO no puede ser nulo!");
         }
         
-        String usuario = usuarioDTO.getIdUsuario();
+        String usuario = usuarioDTO.getNombreUsuario();
         String contraseña = usuarioDTO.getClave();
         
         if (usuario == null || usuario.trim().isEmpty()) {
