@@ -20,6 +20,13 @@ public class UsuarioDTO {
         this.Clave = clave;
         this.CorreoInstitucional = correoInstitucional;
     }
+    public UsuarioDTO(Integer idRol, String nombreUsuario, String cedula, String clave, String correoInstitucional) {
+        this.IdRol = idRol.toString();
+        this.NombreUsuario = nombreUsuario;
+        this.Cedula = cedula;
+        this.Clave = clave;
+        this.CorreoInstitucional = correoInstitucional;
+    }
 
     public UsuarioDTO(String nombreUsuario, String cedula, String clave, String correoInstitucional, String FechaModificacion) {
         this.NombreUsuario = nombreUsuario;

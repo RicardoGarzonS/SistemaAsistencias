@@ -1,18 +1,17 @@
 package DataAccess.DAO;
 
-import java.sql.Statement;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import DataAccess.DTO.UsuarioDTO;
+import DataAccess.IDAO;
+import DataAccess.SQLiteDataHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import DataAccess.IDAO;
-import DataAccess.SQLiteDataHelper;
-import DataAccess.DTO.UsuarioDTO;
 public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
 
     @Override
@@ -89,15 +88,16 @@ public class UsuarioDAO extends SQLiteDataHelper implements IDAO<UsuarioDTO>{
 
     @Override
     public boolean create(UsuarioDTO entity) throws Exception {
-        String query = "INSERT INTO Usuario (NomberUsuario, Clave, Cedula, CorreoInstitucional ) VALUES (?,?,?,?)";
+        String query = "INSERT INTO Usuario (NombreUsuario, IdRol, Clave, Cedula, CorreoInstitucional ) VALUES (?,?,?,?,?)";
         try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
             
             pstmt.setString(1, entity.getNombreUsuario());
-            pstmt.setString(2, entity.getClave());
-            pstmt.setString(3, entity.getCedula());
-            pstmt.setString(4, entity.getCorreoInstitucional());
+            pstmt.setString(2, entity.getIdRol());
+            pstmt.setString(3, entity.getClave());
+            pstmt.setString(4, entity.getCedula());
+            pstmt.setString(5, entity.getCorreoInstitucional());
             pstmt.executeUpdate();
             return true;
         } 

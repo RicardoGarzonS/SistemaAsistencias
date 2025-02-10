@@ -61,6 +61,8 @@ public class Lector {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         String fechaActual = formatter.format(now);
+        System.out.println(fechaActual + " es la fecha");
+        System.out.println(aBL.getIdAsistenciaByIdUsuarioYFecha(tarjeta, fechaActual) + " es el id de la asistencia");
         aBL.updateHoraEntrada(entity, fechaActual, aBL.getIdAsistenciaByIdUsuarioYFecha(tarjeta, fechaActual));
     }
 

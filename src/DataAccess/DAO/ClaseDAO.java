@@ -87,7 +87,7 @@ public class ClaseDAO extends SQLiteDataHelper implements IDAO<ClaseDTO>{
 
     @Override
     public boolean create(ClaseDTO entity) throws Exception {
-        String query = "INSERT INTO Clase (IdMateria, IdDia, HoraInicio, HoraFin) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO Clase (IdMateria, IdDia, HoraInicio, HoraFin) VALUES (?,?,?,?)";
         try {
             Connection        conn  = openConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);

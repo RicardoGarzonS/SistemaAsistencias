@@ -9,8 +9,8 @@ public class MateriaDTO {
 
     public MateriaDTO() {}
 
-    public MateriaDTO(String IdMateria) {
-        this.IdMateria = IdMateria;
+    public MateriaDTO(String Nombre) {
+        this.Nombre = Nombre;
     }
 
     public MateriaDTO(String IdMateria, String Nombre, String FechaModifica) {
