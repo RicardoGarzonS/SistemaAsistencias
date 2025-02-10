@@ -73,6 +73,18 @@ public class AsistenciaBL {
     public String [][] tablaConteoTipoAsistenciasDME (int idDocente, String fechaActual) throws Exception {
         return aDAO.tablaConteoTipoAsistenciasDME(idDocente, fechaActual);
     }
+
+    public boolean updateHoraEntrada (AsistenciaDTO entity, String horaEntrada, Integer idAsistencia) throws Exception {
+        return aDAO.updateHoraEntrada(entity, horaEntrada, idAsistencia);
+    }
+
+    public boolean updateHoraSalida (AsistenciaDTO entity, String horaEntrada, Integer idAsistencia) throws Exception {
+        return aDAO.updateHoraSalida(entity, horaEntrada, idAsistencia);
+    }
+
+    public Integer getIdAsistenciaByIdUsuarioYFecha (Integer idUsuario, String fechaActual) throws Exception {
+        return aDAO.getIdAsistenciaByIdUsuarioYFecha(idUsuario, fechaActual);
+    }
     
 }
     

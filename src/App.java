@@ -1,6 +1,5 @@
 // import UserInterface.Form.MainForm;
 
-import DataAccess.DAO.AsistenciaDAO;
 import UserInterface.Form.MainForm;
 
 public class App {

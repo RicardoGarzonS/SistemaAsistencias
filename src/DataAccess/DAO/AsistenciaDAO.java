@@ -122,8 +122,8 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
 
     @Override
     public boolean update(AsistenciaDTO entity) throws Exception {
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-       LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
        // Consulta: SET HoraEntrada = ?, HoraSalida = ?, FechaModifica = ? WHERE IdAsistencia = ?
        String query = "UPDATE Asistencia SET HoraEntrada = ?, HoraSalida = ?, FechaModifica = ? WHERE IdAsistencia = ?";
        try {
@@ -139,6 +139,8 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
             throw e;
        }
     }
+
+    
 
     @Override
     public boolean delete(Integer id) throws Exception {
@@ -714,5 +716,61 @@ public class AsistenciaDAO extends SQLiteDataHelper implements IDAO<AsistenciaDT
             throw e;
         }
         return totalRegistros;
+    }
+
+    public boolean updateHoraEntrada (AsistenciaDTO entity, String fechaActual, Integer idAsistencia) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+
+        System.out.println(idAsistencia + " es la asistencia correcta?");
+
+        String query = "UPDATE Asistencia SET HoraEntrada = ? WHERE IdAsistencia = " + idAsistencia.toString() + " AND Fecha = '" + fechaActual + "'";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, formatter.format(now));
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public boolean updateHoraSalida (AsistenciaDTO entity, String fechaActual, Integer idAsistencia) throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+
+        System.out.println(idAsistencia + " es la asistencia correcta?");
+
+        String query = "UPDATE Asistencia SET HoraSalida = ? WHERE IdAsistencia = " + idAsistencia.toString() + " AND Fecha = '" + fechaActual + "'";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, formatter.format(now));
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public Integer getIdAsistenciaByIdUsuarioYFecha (Integer idUsuario, String fechaActual) throws Exception {
+        Integer idAsistencia = 0;
+        String query = "SELECT a.IdAsistencia From Asistencia a" +
+                        " JOIN Inscripcion i ON a.IdInscripcion = i.IdInscripcion" +
+                        " WHERE i.IdUsuario = ? AND a.Fecha = ?";
+        try {
+            Connection conn = openConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
+            pstmt.setString(2, fechaActual);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                idAsistencia = rs.getInt("IdAsistencia");
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return idAsistencia;
     }
 }

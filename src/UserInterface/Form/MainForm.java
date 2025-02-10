@@ -10,6 +10,8 @@ public class MainForm {
 
     public MainForm(){
         mostrarLogin();
+        LectorEntradaForm lf = new LectorEntradaForm("Lector Entrada", this);
+        LectorSalidaForm ls = new LectorSalidaForm("Lector Salida", this);
     }
 
     public void mostrarLogin(){
