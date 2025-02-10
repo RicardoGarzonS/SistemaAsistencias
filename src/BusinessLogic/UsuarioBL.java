@@ -22,22 +22,52 @@ public class UsuarioBL {
         return Usuario;
     }
 
+    /***
+     * 
+     * @param correoUsuario correo del usuario
+     * @return devuelve el correo del usuario desde la base
+     * @throws Exception
+     */
     public String getCorreoUsuario(String correoUsuario) throws Exception {
         return uDAO.getCorreo(correoUsuario);
     }
     
+    /***
+     * 
+     * @param idEstudiante id del estudiante
+     * @return devuelve el nombre del usuario desde la base
+     * @throws Exception
+     */
     public String getNombreUsuario(int idEstudiante) throws Exception {
         return uDAO.getNombreUsuario(idEstudiante);
     }
 
+    /***
+     * 
+     * @param nombreUsuario nombre del usuario
+     * @return devuelve la clave del usuario desde la base
+     * @throws Exception
+     */
     public String getClaveUsuario(String nombreUsuario) throws Exception {
         return uDAO.getClaveUsuario(nombreUsuario);
     }
 
+    /***
+     * 
+     * @param correoUsuario correo del usuario
+     * @return devuelve el rol del usuario desde la base
+     * @throws Exception
+     */
     public int getRolUsuario(String correoUsuario) throws Exception {
         return uDAO.getRolUsuario(correoUsuario);
     }
 
+    /***
+     * 
+     * @param correoUsuario correo del usuario
+     * @return devuelve el id del usuario desde la base por medio del correo
+     * @throws Exception
+     */
     public int getIdUsuarioPorCorreo (String correoUsuario) throws Exception {
         return uDAO.getIDUsuarioPorCorreo(correoUsuario);
     }

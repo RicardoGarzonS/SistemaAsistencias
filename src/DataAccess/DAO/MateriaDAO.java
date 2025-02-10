@@ -39,7 +39,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
                  , rs.getString(5));
             }
         } catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+            throw e;
         }
         return materia;  
     }
@@ -67,7 +67,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
                  materias.add(materia);
             }
         } catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "readAll()");
+            throw e;
         }
         return materias;  
         
@@ -85,7 +85,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
             return true;
         } 
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "create()");
+            throw e;
         }
         
     }
@@ -106,7 +106,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
             return true;
     }
     catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "update()");
+            throw e;
         }
         
     }
@@ -123,7 +123,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
             return true;
         }
         catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "delete()");
+            throw e;
         } 
         
     }
@@ -142,7 +142,7 @@ public class MateriaDAO extends SQLiteDataHelper implements IDAO<MateriaDTO>{
                 idMateria = rs.getInt(1);
             }
         } catch (SQLException e) {
-            throw e;//new Exception( e.getMessage(), getClass().getName(), "getIdMateria()");
+            throw e;
         }
         return idMateria;
         
