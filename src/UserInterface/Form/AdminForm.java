@@ -439,7 +439,7 @@ public class AdminForm extends JFrame{
             materiaTbl.setRowSelectionAllowed(false);
             materiaTbl.setColumnSelectionAllowed(false);
 
-            usuarioTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
+            materiaTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
             materiaTbl.setFillsViewportHeight(true);
 
             materiaTblPnl.add(new JScrollPane(materiaTbl));
@@ -488,7 +488,7 @@ public class AdminForm extends JFrame{
             claseTbl.setRowSelectionAllowed(false);
             claseTbl.setColumnSelectionAllowed(false);
 
-            usuarioTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
+            claseTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
             claseTbl.setFillsViewportHeight(true);
 
             claseTblPnl.add(new JScrollPane(claseTbl));
@@ -536,7 +536,7 @@ public class AdminForm extends JFrame{
             inscripcionTbl.setRowSelectionAllowed(false);
             inscripcionTbl.setColumnSelectionAllowed(false);
 
-            usuarioTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
+            inscripcionTbl.setPreferredScrollableViewportSize(new Dimension(ANCHO / 5, ANCHO / 10));
             inscripcionTbl.setFillsViewportHeight(true);
 
             inscripcionTblPnl.add(new JScrollPane(inscripcionTbl));

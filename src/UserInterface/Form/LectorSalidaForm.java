@@ -1,20 +1,19 @@
 package UserInterface.Form;
 
+import BusinessLogic.Entities.Lector;
+import DataAccess.DTO.AsistenciaDTO;
+import UserInterface.CustomerControl.G3Button;
+import UserInterface.CustomerControl.G3TextBox;
+import UserInterface.Style;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
-
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import BusinessLogic.Entities.Lector;
-import DataAccess.DTO.AsistenciaDTO;
-import UserInterface.Style;
-import UserInterface.CustomerControl.G3Button;
-import UserInterface.CustomerControl.G3TextBox;
 
 public class LectorSalidaForm extends JFrame{
     AsistenciaDTO asistencia;
@@ -22,7 +21,7 @@ public class LectorSalidaForm extends JFrame{
     private Lector      lector;
     final   int         ESCALA              = 70;
     final   int         ALTO                = ESCALA * 9;
-    final   int         ANCHO               = ESCALA * 16;
+    final   int         ANCHO               = ESCALA * 9;
     final   int         SEPARACION          = ALTO / 25;
 
 
@@ -59,7 +58,8 @@ public class LectorSalidaForm extends JFrame{
         setTitle(titulo);
         setSize(ANCHO, ALTO);
         setResizable(false);
-        setLocationRelativeTo(null);
+        setLocation(Toolkit.getDefaultToolkit().getScreenSize().width - ANCHO, 0);
+        //setLocationRelativeTo(null);
 
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
@@ -69,7 +69,7 @@ public class LectorSalidaForm extends JFrame{
         cabecera.setBackground(Style.COLOR_ACCENT_SOLID);
         cabecera.setBorder(new EmptyBorder(ANCHO / 28, ANCHO / 28, ANCHO / 28, ANCHO / 28));
         bienvenida.setForeground(Style.COLOR_FONT_LIGHT);
-        bienvenida.setFont(new Font("Century Gothic", Font.BOLD, (ESCALA * 2) / 3));
+        bienvenida.setFont(new Font("Century Gothic", Font.BOLD, (ESCALA * 2) / 7));
         bienvenida.setText("REGISTRO HORA DE SALIDA");
 
         salirBtn.setForeground(Style.COLOR_ACCENT_SOLID);

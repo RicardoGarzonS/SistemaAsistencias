@@ -1,20 +1,18 @@
     package UserInterface.Form;
 
+    import BusinessLogic.Entities.Lector;
+    import DataAccess.DTO.AsistenciaDTO;
+    import UserInterface.CustomerControl.G3Button;
+    import UserInterface.CustomerControl.G3TextBox;
+    import UserInterface.Style;
     import java.awt.BorderLayout;
     import java.awt.Container;
     import java.awt.Font;
-
     import javax.swing.JFrame;
-    import javax.swing.JLabel;
-    import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
     import javax.swing.JTextField;
     import javax.swing.border.EmptyBorder;
-
-    import BusinessLogic.Entities.Lector;
-import DataAccess.DTO.AsistenciaDTO;
-import UserInterface.Style;
-    import UserInterface.CustomerControl.G3Button;
-    import UserInterface.CustomerControl.G3TextBox;
 
     public class LectorEntradaForm extends JFrame{
         AsistenciaDTO asistencia;
@@ -22,7 +20,7 @@ import UserInterface.Style;
         private Lector      lector;
         final   int         ESCALA              = 70;
         final   int         ALTO                = ESCALA * 9;
-        final   int         ANCHO               = ESCALA * 16;
+        final   int         ANCHO               = ESCALA * 9;
         final   int         SEPARACION          = ALTO / 25;
 
 
@@ -59,7 +57,8 @@ import UserInterface.Style;
             setTitle(titulo);
             setSize(ANCHO, ALTO);
             setResizable(false);
-            setLocationRelativeTo(null);
+            setLocation(0, 0);
+            //setLocationRelativeTo(null);
 
             Container container = getContentPane();
             container.setLayout(new BorderLayout());
@@ -69,7 +68,7 @@ import UserInterface.Style;
             cabecera.setBackground(Style.COLOR_ACCENT_SOLID);
             cabecera.setBorder(new EmptyBorder(ANCHO / 28, ANCHO / 28, ANCHO / 28, ANCHO / 28));
             bienvenida.setForeground(Style.COLOR_FONT_LIGHT);
-            bienvenida.setFont(new Font("Century Gothic", Font.BOLD, (ESCALA * 2) / 3));
+            bienvenida.setFont(new Font("Century Gothic", Font.BOLD, (ESCALA * 2) / 7));
             bienvenida.setText("REGISTRO HORA DE ENTRADA");
 
             salirBtn.setForeground(Style.COLOR_ACCENT_SOLID);

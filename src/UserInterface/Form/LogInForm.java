@@ -40,7 +40,8 @@ public class LogInForm extends JFrame{
     private G3Label     claveLabel;
     private G3TextBox   claveTxt;
 
-    private G3Button    loginBtn;
+    private G3Button    loginBtn,
+                        lectorBtn;
 
     //final   JPanel  logoPanel           = new JPanel();
 
@@ -50,6 +51,7 @@ public class LogInForm extends JFrame{
         lg = new Login();
         ubl = new UsuarioBL();
         loginBtn.addActionListener ( e -> login()); 
+        lectorBtn.addActionListener(e -> funcionLector());
         setVisible(true);
     }
 
@@ -135,10 +137,15 @@ public class LogInForm extends JFrame{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
+        lectorBtn  = new G3Button("LECTOR", new Rectangle(ANCHO- anchoLbl, ALTO - altoLbl * 2 , anchoLbl, altoLbl));
+        lectorBtn.setBackground(Style.COLOR_ACCENT_SOLID);
+        lectorBtn.setForeground(Style.COLOR_FONT_LIGHT);
+
         fondo.add(ttlLabel);
         fondo.add(loginPanel);
         fondo.add(logo);
+        fondo.add(lectorBtn);
         add(fondo);
     }   
 
@@ -175,5 +182,8 @@ public class LogInForm extends JFrame{
             Style.showMsgError("Credenciales no validas");
             padre.mostrarLogin();
         }
+    }
+    private void funcionLector(){
+        padre.mostrarLector();
     }
 }
