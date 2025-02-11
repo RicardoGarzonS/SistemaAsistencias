@@ -1,18 +1,24 @@
-## Getting Started
+## Asistente Universitario de Registro de Asistencias
+### Integrantes:
+- GARZON SANTACRUZ RICADO DAVID
+- GONZALEZ MERO HECTOR DANIEL
+- JIBAJA AMAYA VELKY SEBASTIAN
+- OVACO DE LA CRUZ BRAYAN AARON
+Un programa que permite el manejo de 
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Estructura
 
-## Folder Structure
+- `design`: diagramas de caso de uso, diagrama de clases, MER y arquitectura
+- `manuales`: manual de usuario y manual tecnico
+- `src`: el codigo fuente
+  - `DataAccess`: manejo de entrada y salida de datos
+  - `BusinessLogic`: controles y manejo de funcionalidad
+  - `UserInterface`: interfaz grafica
+  - `Framework`: manejo de errores
+- `lib`: librerias utilizadas
+- `database`: base de datos
+- `databaseScript`: DDL y DML de la base de datos
+- `bin`: salida compilada
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Presentacion
+https://www.canva.com/design/DAGXmxmRzkQ/k0fVjrDSNLVIxrjIbtWRKw/edit?ui=eyJEIjp7IlAiOnsiQiI6ZmFsc2V9fX0
