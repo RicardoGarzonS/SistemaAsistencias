@@ -4,7 +4,6 @@
 - GONZALEZ MERO HECTOR DANIEL
 - JIBAJA AMAYA VELKY SEBASTIAN
 - OVACO DE LA CRUZ BRAYAN AARON
-Un programa que permite el manejo de 
 
 ## Estructura
 
