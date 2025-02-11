@@ -1,0 +1,91 @@
+@startuml
+
+' Definición de las clases
+class Usuario {
+    + IdUsuario : STRING [PK]
+    + IdRol : STRING [FK > Rol.IdRol]
+    + NombreUsuario : STRING
+    + Clave : STRING
+    + Cedula : STRING
+    + CorreoInstitucional : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Rol {
+    + IdRol : STRING [PK]
+    + Nombre : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Materia {
+    + IdMateria : STRING [PK]
+    + Nombre : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Clase {
+    + IdClase : STRING [PK]
+    + IdMateria : STRING [FK > Materia.IdMateria]
+    + IdDia : STRING [FK > Dia.IdDia]
+    + HoraInicio : STRING
+    + HoraFin : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Dia {
+    + IdDia : STRING [PK]
+    + Nombre : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Inscripcion {
+    + IdInscripcion : STRING [PK]
+    + IdUsuario : STRING [FK > Usuario.IdUsuario]
+    + IdClase : STRING [FK > Clase.IdClase]
+    + IdLector : STRING [FK > Lector.IdLector]
+    + Año : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Asistencia {
+    + IdAsistencia : STRING [PK]
+    + IdInscripcion : STRING [FK > Inscripcion.IdInscripcion]
+    + Fecha : STRING
+    + HoraEntrada : STRING
+    + HoraSalida : STRING
+    + Justificacion : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+class Lector {
+    + IdLector : STRING [PK]
+    + CodigoAula : STRING
+    + Estado : STRING
+    + FechaCreacion : STRING
+    + FechaModificacion : STRING
+}
+
+' Relaciones entre las clases
+Usuario }|--|| Rol : "tiene"
+Usuario ||--o{ Inscripcion : "realiza"
+Materia ||--o{ Clase : "tiene"
+Dia ||--o{ Clase : "ocurre en"
+Clase ||--o{ Inscripcion : "tiene"
+Inscripcion ||--o{ Asistencia : "reporta"
+Inscripcion }|--|| Lector : "usa"
+
+@enduml

@@ -1,0 +1,142 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package BusinessLogic.Entities {
+  class Administrador
+  class Docente {
+    + asistenciasEstudianteEspecifico()
+    + asistenciasTotalEstudiantes()
+    + tablaConteoAsistenciasTotalEYMProfesor()
+    + tablaConteoTipoAsistenciasDME()
+  }
+  class Estudiante {
+    + asistenciasMateriaEspecifica()
+    + asistenciasTotalMaterias()
+    + totalAsitenciasTipo()
+  }
+  class Lector {
+    # lecturaTarjeta()
+  }
+  class Login {
+    + loginCuenta()
+  }
+}
+
+package BusinessLogic {
+  class AsistenciaBL {
+    - asistenciaDAO: AsistenciaDAO
+    + registrarAsistencia()
+    + contarAsistenciasMateriaEspecifica()
+  }
+  class BLFactory<T>
+  class ClaseBL
+  class ConfiguracionClase
+  class DiaBL
+  class InscripcionBL {
+    - inscripcionDAO: InscripcionDAO
+    + registrarInscripcion()
+    + generarAsistencias()
+  }
+  class MateriaBL
+  class UsuarioBL {
+    - usuarioDAO: UsuarioDAO
+    + getCorreoUsuario()
+    + crearUsuario()
+  }
+}
+
+package DataAccess.DAO {
+  interface IDAO<T> {
+    + readBy()
+    + readAll()
+    + create()
+    + update()
+    + delete()
+  }
+  
+  class AsistenciaDAO
+  class ClaseDAO
+  class DiaDAO
+  class InscripcionDAO
+  class LectorDAO
+  class MateriaDAO
+  class RolDAO
+  class UsuarioDAO
+
+  IDAO <|.. AsistenciaDAO
+  IDAO <|.. ClaseDAO
+  IDAO <|.. DiaDAO
+  IDAO <|.. InscripcionDAO
+  IDAO <|.. LectorDAO
+  IDAO <|.. MateriaDAO
+  IDAO <|.. RolDAO
+  IDAO <|.. UsuarioDAO
+}
+
+package DataAccess.DTO {
+  class AsistenciaDTO
+  class ClaseDTO
+  class DiaDTO
+  class InscripcionDTO
+  class LectorDTO
+  class MateriaDTO
+  class RolDTO
+  class UsuarioDTO
+}
+
+package UserInterface.Form {
+  class AdminForm
+  class LogInForm {
+    - loginBtn: G3Button
+    - usuarioTxt: G3TextBox
+    + login()
+  }
+  class MainForm
+  class StudentForm {
+    - historico: JTable
+    + crearHorario()
+  }
+  class TeacherForm {
+    - historico: JTable
+    + crearHorario()
+  }
+}
+
+package UserInterface.CustomerControl {
+  class G3Button
+  class G3Label
+  class G3LabelText
+  class G3Panel
+  class G3TextBox
+}
+
+' Relaciones principales
+Docente --> AsistenciaBL
+Docente --> InscripcionBL
+Estudiante --> AsistenciaBL
+Estudiante --> InscripcionBL
+Login --> UsuarioBL
+
+AsistenciaBL --> AsistenciaDAO
+AsistenciaBL --> AsistenciaDTO
+InscripcionBL --> InscripcionDAO
+UsuarioBL --> UsuarioDAO
+
+LogInForm --> G3Button
+LogInForm --> G3TextBox
+StudentForm --> G3Button
+TeacherForm --> G3Button
+
+AsistenciaDAO --> AsistenciaDTO
+UsuarioDAO --> UsuarioDTO
+
+MainForm --> LogInForm
+MainForm --> StudentForm
+MainForm --> TeacherForm
+
+' Notas adicionales
+note top of Administrador: Clase vacía (posible placeholder)
+note top of AdminForm: Formulario no implementado
+note top of BLFactory: Implementación genérica de Factory
+
+@enduml
